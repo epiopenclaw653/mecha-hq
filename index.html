@@ -6,522 +6,162 @@
 <title>Mecha Death Squad — HQ</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
-
   :root {
-    --bg: #060608;
-    --surface: #0d0d12;
-    --card: #111118;
-    --border: #1a1a28;
-    --accent: #ff3c3c;
-    --gold: #ffd700;
-    --cyan: #00e5ff;
-    --green: #7fff00;
-    --purple: #b44fff;
-    --orange: #ff9500;
-    --blue: #00bfff;
-    --text: #e8e8f0;
-    --muted: #55556a;
+    --bg: #060608; --surface: #0d0d12; --card: #111118; --border: #1a1a28;
+    --accent: #ff3c3c; --gold: #ffd700; --cyan: #00e5ff; --green: #7fff00;
+    --purple: #b44fff; --orange: #ff9500; --blue: #00bfff; --text: #e8e8f0; --muted: #55556a;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-    background-image:
-      radial-gradient(ellipse at 10% 0%, rgba(255,60,60,0.06) 0%, transparent 50%),
+    background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif;
+    min-height: 100vh; overflow-x: hidden;
+    background-image: radial-gradient(ellipse at 10% 0%, rgba(255,60,60,0.06) 0%, transparent 50%),
       radial-gradient(ellipse at 90% 100%, rgba(0,229,255,0.06) 0%, transparent 50%),
       radial-gradient(ellipse at 50% 50%, rgba(180,79,255,0.03) 0%, transparent 60%);
   }
-
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 80px 20px 60px;
-    position: relative;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--cyan), transparent);
-  }
-
-  .claude-badge {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: var(--gold);
-    border: 1px solid rgba(255,215,0,0.3);
-    padding: 6px 16px;
-    margin-bottom: 24px;
-    background: rgba(255,215,0,0.05);
-  }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(56px, 10vw, 120px);
-    letter-spacing: 6px;
-    line-height: 0.9;
+  .hero { text-align: center; padding: 80px 20px 60px; position: relative; }
+  .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--cyan), transparent); }
+  .claude-badge { display: inline-block; font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 4px; color: var(--gold); border: 1px solid rgba(255,215,0,0.3);
+    padding: 6px 16px; margin-bottom: 24px; background: rgba(255,215,0,0.05); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px, 10vw, 120px);
+    letter-spacing: 6px; line-height: 0.9;
     background: linear-gradient(135deg, #ff3c3c 0%, #ff9500 40%, #ffd700 70%, #ffffff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-  }
-
-  .hero-sub {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(20px, 4vw, 36px);
-    letter-spacing: 8px;
-    color: var(--cyan);
-    margin-bottom: 20px;
-  }
-
-  .hero-tagline {
-    font-size: 14px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    font-style: italic;
-    margin-bottom: 40px;
-  }
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+  .hero-sub { font-family: 'Bebas Neue', sans-serif; font-size: clamp(20px, 4vw, 36px);
+    letter-spacing: 8px; color: var(--cyan); margin-bottom: 20px; }
+  .hero-tagline { font-size: 14px; color: var(--muted); letter-spacing: 2px; font-style: italic; margin-bottom: 40px; }
 
   /* COMMAND CHAIN */
-  .command-chain {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    flex-wrap: wrap;
-    margin: 0 auto 80px;
-    max-width: 900px;
-    padding: 0 20px;
-  }
-
-  .chain-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px 24px;
-    border: 1px solid;
-    position: relative;
-    min-width: 140px;
-  }
-
+  .command-chain { display: flex; align-items: center; justify-content: center; gap: 0;
+    flex-wrap: wrap; margin: 0 auto 80px; max-width: 1100px; padding: 0 20px; }
+  .chain-node { display: flex; flex-direction: column; align-items: center; padding: 16px 24px;
+    border: 1px solid; position: relative; min-width: 130px; }
   .chain-node.claude { border-color: var(--gold); background: rgba(255,215,0,0.05); }
   .chain-node.epi { border-color: var(--accent); background: rgba(255,60,60,0.05); }
+  .chain-node.joe { border-color: var(--orange); background: rgba(255,149,0,0.07); position: relative; }
+  .chain-node.joe::after { content: 'NEW'; position: absolute; top: -8px; right: -8px;
+    font-family: 'Space Mono', monospace; font-size: 7px; letter-spacing: 1px;
+    background: var(--orange); color: #000; padding: 2px 5px; }
   .chain-node.squad { border-color: var(--cyan); background: rgba(0,229,255,0.05); }
   .chain-node.city { border-color: var(--green); background: rgba(127,255,0,0.05); }
-
   .chain-icon { font-size: 24px; margin-bottom: 6px; }
   .chain-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; }
   .chain-role { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 3px; letter-spacing: 1px; }
-
-  .chain-arrow {
-    font-size: 20px;
-    color: var(--muted);
-    padding: 0 8px;
-  }
+  .chain-arrow { font-size: 20px; color: var(--muted); padding: 0 8px; }
 
   /* SECTION */
-  .section {
-    max-width: 1200px;
-    margin: 0 auto 80px;
-    padding: 0 20px;
-  }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 6px;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+  .section { max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; }
+  .section-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 6px;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 16px; }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
   /* PIPELINE */
-  .pipeline {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+  .pipeline { display: flex; flex-direction: column; gap: 2px; }
+  .pipe-row { display: grid; grid-template-columns: 60px 180px 1fr; gap: 2px; min-height: 90px; }
+  .pipe-num { background: var(--card); border: 1px solid var(--border); display: flex;
+    align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: var(--muted); }
+  .pipe-label { background: var(--card); border: 1px solid var(--border); border-left: 3px solid;
+    padding: 16px 20px; display: flex; flex-direction: column; justify-content: center; }
+  .pipe-agent-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; margin-bottom: 4px; }
+  .pipe-agent-role { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; }
+  .pipe-content { background: var(--surface); border: 1px solid var(--border); padding: 16px 24px;
+    display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  .pipe-desc { font-size: 13px; color: #9090b0; line-height: 1.6; }
+  .pipe-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .ptag { font-family: 'Space Mono', monospace; font-size: 9px; padding: 2px 8px; border-radius: 1px;
+    letter-spacing: 1px; border: 1px solid; }
 
-  .pipe-row {
-    display: grid;
-    grid-template-columns: 60px 180px 1fr;
-    gap: 2px;
-    min-height: 90px;
-  }
-
-  .pipe-num {
-    background: var(--card);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    color: var(--muted);
-  }
-
-  .pipe-label {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-left: 3px solid;
-    padding: 16px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .pipe-agent-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 2px;
-    margin-bottom: 4px;
-  }
-
-  .pipe-agent-role {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
-
-  .pipe-content {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 16px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .pipe-desc {
-    font-size: 13px;
-    color: #9090b0;
-    line-height: 1.6;
-  }
-
-  .pipe-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-
-  .ptag {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    padding: 2px 8px;
-    border-radius: 1px;
-    letter-spacing: 1px;
-    border: 1px solid;
-  }
-
-  /* AGENT CARDS GRID */
-  .squad-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2px;
-  }
-
-  .squad-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 28px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-  }
-
-  .squad-card:hover {
-    border-color: rgba(255,255,255,0.1);
-    transform: translateY(-3px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  }
-
-  .squad-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-  }
-
-  .card-number {
-    position: absolute;
-    top: 16px;
-    right: 20px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    opacity: 0.05;
-    line-height: 1;
-  }
-
+  /* SQUAD GRID */
+  .squad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; }
+  .squad-card { background: var(--card); border: 1px solid var(--border); padding: 28px;
+    position: relative; overflow: hidden; transition: all 0.3s; }
+  .squad-card:hover { border-color: rgba(255,255,255,0.1); transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+  .squad-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .card-number { position: absolute; top: 16px; right: 20px; font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px; opacity: 0.05; line-height: 1; }
   .card-icon { font-size: 32px; margin-bottom: 14px; }
-
-  .card-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
-    letter-spacing: 3px;
-    margin-bottom: 4px;
-  }
-
-  .card-role {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 18px;
-  }
-
-  .card-duties {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    margin-bottom: 18px;
-  }
-
-  .card-duties li {
-    font-size: 12px;
-    color: #8080a0;
-    padding-left: 14px;
-    position: relative;
-    line-height: 1.5;
-  }
-
-  .card-duties li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    opacity: 0.35;
-    font-size: 11px;
-  }
-
-  .card-tools {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-    margin-bottom: 10px;
-  }
-
-  .tool {
-    font-family: 'Space Mono', monospace;
-    font-size: 8px;
-    padding: 2px 7px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    color: var(--muted);
-    letter-spacing: 1px;
-    border-radius: 1px;
-  }
-
-  .hb {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    padding: 3px 8px;
-    border-radius: 1px;
-    letter-spacing: 1px;
-  }
+  .card-name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; margin-bottom: 4px; }
+  .card-role { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 18px; }
+  .card-duties { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+  .card-duties li { font-size: 12px; color: #8080a0; padding-left: 14px; position: relative; line-height: 1.5; }
+  .card-duties li::before { content: '→'; position: absolute; left: 0; opacity: 0.35; font-size: 11px; }
+  .card-tools { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 14px;
+    border-top: 1px solid var(--border); margin-bottom: 10px; }
+  .tool { font-family: 'Space Mono', monospace; font-size: 8px; padding: 2px 7px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    color: var(--muted); letter-spacing: 1px; border-radius: 1px; }
+  .hb { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px;
+    padding: 3px 8px; border-radius: 1px; letter-spacing: 1px; }
   .hb-off { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.2); color: #ff6060; }
   .hb-on { background: rgba(127,255,0,0.08); border: 1px solid rgba(127,255,0,0.2); color: #7fff00; }
 
   /* HASHTAG */
-  .ht-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-bottom: 80px;
-  }
-
-  .ht-block {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 24px;
-  }
-
-  .ht-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    margin-bottom: 14px;
-    text-transform: uppercase;
-  }
-
+  .ht-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 80px; }
+  .ht-block { background: var(--card); border: 1px solid var(--border); padding: 24px; }
+  .ht-title { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px;
+    margin-bottom: 14px; text-transform: uppercase; }
   .ht-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .ht { font-size: 11px; padding: 3px 9px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: #7070a0; border-radius: 1px; }
+  .ht { font-size: 11px; padding: 3px 9px; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06); color: #7070a0; border-radius: 1px; }
 
   /* PHASES */
-  .phases {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    margin-bottom: 80px;
-  }
+  .phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-bottom: 80px; }
+  .phase { background: var(--card); border: 1px solid var(--border); padding: 24px; }
+  .phase-num { font-family: 'Bebas Neue', sans-serif; font-size: 48px; line-height: 1; margin-bottom: 4px; }
+  .phase-title { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    color: var(--muted); margin-bottom: 16px; text-transform: uppercase; }
+  .phase-items { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .phase-items li { font-size: 12px; color: #7070a0; padding-left: 14px; position: relative; line-height: 1.4; }
+  .phase-items li::before { content: '◆'; position: absolute; left: 0; font-size: 6px; top: 4px; opacity: 0.4; }
 
-  .phase {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 24px;
-  }
-
-  .phase-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .phase-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--muted);
-    margin-bottom: 16px;
-    text-transform: uppercase;
-  }
-
-  .phase-items {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .phase-items li {
-    font-size: 12px;
-    color: #7070a0;
-    padding-left: 14px;
-    position: relative;
-    line-height: 1.4;
-  }
-
-  .phase-items li::before {
-    content: '◆';
-    position: absolute;
-    left: 0;
-    font-size: 6px;
-    top: 4px;
-    opacity: 0.4;
-  }
-
-  /* STRIPE */
-  .billing-banner {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--green);
-    padding: 24px 32px;
-    margin-bottom: 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 32px;
-  }
-
-  .billing-item { }
-  .billing-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: var(--muted);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
-  .billing-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 2px;
-    color: var(--green);
-  }
+  /* BILLING */
+  .billing-banner { background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--green); padding: 24px 32px; margin-bottom: 80px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+  .billing-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px;
+    color: var(--muted); margin-bottom: 6px; text-transform: uppercase; }
+  .billing-value { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: var(--green); }
   .billing-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
   /* FOOTER */
-  .footer {
-    text-align: center;
-    padding: 40px 20px;
-    border-top: 1px solid var(--border);
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 3px;
-    background: linear-gradient(180deg, transparent, rgba(255,60,60,0.02));
-  }
-
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    letter-spacing: 6px;
-    background: linear-gradient(135deg, #ff3c3c, #ffd700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-  }
+  .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border);
+    font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 3px;
+    background: linear-gradient(180deg, transparent, rgba(255,60,60,0.02)); }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 6px;
+    background: linear-gradient(135deg, #ff3c3c, #ffd700); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
 
   /* COLOR UTILS */
-  .c-gold { color: var(--gold); }
-  .c-cyan { color: var(--cyan); }
-  .c-green { color: var(--green); }
-  .c-purple { color: var(--purple); }
-  .c-orange { color: var(--orange); }
-  .c-red { color: var(--accent); }
-  .c-blue { color: var(--blue); }
-
-  .b-gold { border-color: var(--gold); }
-  .b-cyan { border-color: var(--cyan); }
-  .b-green { border-color: var(--green); }
-  .b-purple { border-color: var(--purple); }
-  .b-orange { border-color: var(--orange); }
-  .b-red { border-color: var(--accent); }
-  .b-blue { border-color: var(--blue); }
-
-  .bg-gold { background: rgba(255,215,0,0.06); }
-  .bg-cyan { background: rgba(0,229,255,0.06); }
-  .bg-green { background: rgba(127,255,0,0.06); }
-  .bg-purple { background: rgba(180,79,255,0.06); }
-  .bg-orange { background: rgba(255,149,0,0.06); }
-  .bg-red { background: rgba(255,60,60,0.06); }
-  .bg-blue { background: rgba(0,191,255,0.06); }
-
-  .card-gold::before { background: var(--gold); }
-  .card-cyan::before { background: var(--cyan); }
-  .card-green::before { background: var(--green); }
-  .card-purple::before { background: var(--purple); }
-  .card-orange::before { background: var(--orange); }
-  .card-red::before { background: var(--accent); }
-  .card-blue::before { background: var(--blue); }
-  .card-white::before { background: #ffffff; }
-
-  .ptag-gold { border-color: rgba(255,215,0,0.3); color: var(--gold); background: rgba(255,215,0,0.06); }
-  .ptag-cyan { border-color: rgba(0,229,255,0.3); color: var(--cyan); background: rgba(0,229,255,0.06); }
-  .ptag-green { border-color: rgba(127,255,0,0.3); color: var(--green); background: rgba(127,255,0,0.06); }
-  .ptag-purple { border-color: rgba(180,79,255,0.3); color: var(--purple); background: rgba(180,79,255,0.06); }
-  .ptag-orange { border-color: rgba(255,149,0,0.3); color: var(--orange); background: rgba(255,149,0,0.06); }
-  .ptag-red { border-color: rgba(255,60,60,0.3); color: var(--accent); background: rgba(255,60,60,0.06); }
-  .ptag-blue { border-color: rgba(0,191,255,0.3); color: var(--blue); background: rgba(0,191,255,0.06); }
-  .ptag-white { border-color: rgba(255,255,255,0.2); color: #ffffff; background: rgba(255,255,255,0.04); }
+  .c-gold{color:var(--gold)} .c-cyan{color:var(--cyan)} .c-green{color:var(--green)}
+  .c-purple{color:var(--purple)} .c-orange{color:var(--orange)} .c-red{color:var(--accent)} .c-blue{color:var(--blue)}
+  .b-gold{border-color:var(--gold)} .b-cyan{border-color:var(--cyan)} .b-green{border-color:var(--green)}
+  .b-purple{border-color:var(--purple)} .b-orange{border-color:var(--orange)} .b-red{border-color:var(--accent)} .b-blue{border-color:var(--blue)}
+  .bg-gold{background:rgba(255,215,0,0.06)} .bg-cyan{background:rgba(0,229,255,0.06)}
+  .bg-green{background:rgba(127,255,0,0.06)} .bg-purple{background:rgba(180,79,255,0.06)}
+  .bg-orange{background:rgba(255,149,0,0.06)} .bg-red{background:rgba(255,60,60,0.06)} .bg-blue{background:rgba(0,191,255,0.06)}
+  .card-gold::before{background:var(--gold)} .card-cyan::before{background:var(--cyan)}
+  .card-green::before{background:var(--green)} .card-purple::before{background:var(--purple)}
+  .card-orange::before{background:var(--orange)} .card-red::before{background:var(--accent)}
+  .card-blue::before{background:var(--blue)} .card-white::before{background:#ffffff}
+  .ptag-gold{border-color:rgba(255,215,0,0.3);color:var(--gold);background:rgba(255,215,0,0.06)}
+  .ptag-cyan{border-color:rgba(0,229,255,0.3);color:var(--cyan);background:rgba(0,229,255,0.06)}
+  .ptag-green{border-color:rgba(127,255,0,0.3);color:var(--green);background:rgba(127,255,0,0.06)}
+  .ptag-purple{border-color:rgba(180,79,255,0.3);color:var(--purple);background:rgba(180,79,255,0.06)}
+  .ptag-orange{border-color:rgba(255,149,0,0.3);color:var(--orange);background:rgba(255,149,0,0.06)}
+  .ptag-red{border-color:rgba(255,60,60,0.3);color:var(--accent);background:rgba(255,60,60,0.06)}
+  .ptag-blue{border-color:rgba(0,191,255,0.3);color:var(--blue);background:rgba(0,191,255,0.06)}
+  .ptag-white{border-color:rgba(255,255,255,0.2);color:#ffffff;background:rgba(255,255,255,0.04)}
 
   @media (max-width: 768px) {
-    .pipe-row { grid-template-columns: 1fr; }
-    .pipe-num { display: none; }
-    .phases { grid-template-columns: repeat(2, 1fr); }
-    .ht-grid { grid-template-columns: 1fr; }
-    .billing-banner { grid-template-columns: 1fr; }
-    .command-chain { flex-direction: column; }
+    .pipe-row { grid-template-columns: 1fr; } .pipe-num { display: none; }
+    .phases { grid-template-columns: repeat(2, 1fr); } .ht-grid { grid-template-columns: 1fr; }
+    .billing-banner { grid-template-columns: 1fr; } .command-chain { flex-direction: column; }
     .chain-arrow { transform: rotate(90deg); }
   }
 </style>
@@ -533,7 +173,7 @@
   <div class="claude-badge">👑 ARCHITECTED BY CLAUDE — COMMANDED BY EPI</div>
   <div class="hero-title">MECHA</div>
   <div class="hero-sub">Death Squad</div>
-  <div class="hero-tagline">11 autonomous agents. One mission. Local businesses made visible.</div>
+  <div class="hero-tagline">12 autonomous agents. One mission. Local businesses made visible. — Cada uno con nombre, cada uno con alma.</div>
 </div>
 
 <!-- COMMAND CHAIN -->
@@ -548,6 +188,12 @@
     <div class="chain-icon">🦞</div>
     <div class="chain-name c-red">EPI</div>
     <div class="chain-role">The Commander</div>
+  </div>
+  <div class="chain-arrow">→</div>
+  <div class="chain-node joe">
+    <div class="chain-icon">⚙️</div>
+    <div class="chain-name c-orange">JOE LOPEZ</div>
+    <div class="chain-role">Operations Manager</div>
   </div>
   <div class="chain-arrow">→</div>
   <div class="chain-node squad">
@@ -569,13 +215,31 @@
   <div class="pipeline">
 
     <div class="pipe-row">
-      <div class="pipe-num">01</div>
-      <div class="pipe-label b-cyan bg-cyan">
-        <div class="pipe-agent-name c-cyan">INTAKE</div>
-        <div class="pipe-agent-role">Client Onboarding</div>
+      <div class="pipe-num">00</div>
+      <div class="pipe-label b-orange bg-orange">
+        <div class="pipe-agent-name c-orange">JOE LOPEZ</div>
+        <div class="pipe-agent-role">Operations Manager</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Customer fills Google Form on Mecha website. Intake Agent watches the Sheet, validates submission, creates client folder in Drive, fires alert to Epi. Job is queued.</div>
+        <div class="pipe-desc">Receives jobs from Epi and orchestrates the full pipeline. Dispatches each SA in order, tracks status, handles handoffs, and runs multiple client jobs simultaneously. Reports completion back to Epi. Epi stays strategic — Joe keeps the machine running.</div>
+        <div class="pipe-tags">
+          <span class="ptag ptag-orange">Pipeline Orchestration</span>
+          <span class="ptag ptag-orange">SA Dispatch</span>
+          <span class="ptag ptag-orange">Job Tracking</span>
+          <span class="ptag ptag-orange">Multi-Client</span>
+          <span class="ptag ptag-orange">Telegram Reports</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-row">
+      <div class="pipe-num">01</div>
+      <div class="pipe-label b-cyan bg-cyan">
+        <div class="pipe-agent-name c-cyan">GOPHER</div>
+        <div class="pipe-agent-role">SA01 — Client Onboarding</div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-desc">Customer fills Google Form on Mecha website. Intake Agent watches the Sheet, validates submission, creates client folder in Drive, fires alert to Epi. Job is queued for Joe Lopez.</div>
         <div class="pipe-tags">
           <span class="ptag ptag-cyan">Google Forms</span>
           <span class="ptag ptag-cyan">Google Sheets</span>
@@ -588,16 +252,17 @@
     <div class="pipe-row">
       <div class="pipe-num">02</div>
       <div class="pipe-label b-orange bg-orange">
-        <div class="pipe-agent-name c-orange">SCRIPT</div>
-        <div class="pipe-agent-role">Viral Script Writer</div>
+        <div class="pipe-agent-name c-orange">DAVID</div>
+        <div class="pipe-agent-role">SA02 — Viral Script Writer</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Receives client brief. Writes 25–30 sec viral script: HOOK / SETUP / REVEAL / CTA. Applies MrBeast 7 retention laws. Bilingual ES/EN. Under 75 words. Saves to Drive.</div>
+        <div class="pipe-desc">Receives client brief. Writes bilingual (ES/EN) 25–30 sec viral script: HOOK / SETUP / REVEAL / CTA. Applies MrBeast retention framework — CTR, AVD, AVP. Under 75 words. Defines thumbnail first. Saves to Drive.</div>
         <div class="pipe-tags">
           <span class="ptag ptag-orange">MrBeast Framework</span>
+          <span class="ptag ptag-orange">CTR/AVD/AVP</span>
           <span class="ptag ptag-orange">5 Hook Types</span>
-          <span class="ptag ptag-orange">7 Retention Laws</span>
           <span class="ptag ptag-orange">ES/EN Bilingual</span>
+          <span class="ptag ptag-orange">Wow Factor</span>
         </div>
       </div>
     </div>
@@ -605,17 +270,17 @@
     <div class="pipe-row">
       <div class="pipe-num">03</div>
       <div class="pipe-label b-purple bg-purple">
-        <div class="pipe-agent-name c-purple">MEDIA</div>
-        <div class="pipe-agent-role">Images, Captions & Fonts</div>
+        <div class="pipe-agent-name c-purple">JUNIOR</div>
+        <div class="pipe-agent-role">SA03 — Images & Visuals</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Generates 4 AI images via nano-banana-pro. Bakes text overlays, captions, and fonts directly into image frames. Handles real customer footage when submitted. Prepares all visual assets.</div>
+        <div class="pipe-desc">Generates 4 AI images via nano-banana-pro using SA02's visual descriptions. Latino/Mexican-American aesthetic by default. No text baked in — clean source images only. Handles real customer footage in Phase 3.</div>
         <div class="pipe-tags">
           <span class="ptag ptag-purple">nano-banana-pro</span>
-          <span class="ptag ptag-purple">AI Images</span>
-          <span class="ptag ptag-purple">Captions Baked In</span>
+          <span class="ptag ptag-purple">4 AI Images</span>
+          <span class="ptag ptag-purple">Latino Aesthetic</span>
           <span class="ptag ptag-purple">Real Footage</span>
-          <span class="ptag ptag-purple">Fonts</span>
+          <span class="ptag ptag-purple">9:16 Vertical</span>
         </div>
       </div>
     </div>
@@ -623,16 +288,17 @@
     <div class="pipe-row">
       <div class="pipe-num">04</div>
       <div class="pipe-label b-blue bg-blue">
-        <div class="pipe-agent-name c-blue">AUDIO</div>
-        <div class="pipe-agent-role">Voice & Music</div>
+        <div class="pipe-agent-name c-blue">DJ WONDER</div>
+        <div class="pipe-agent-role">SA04 — Voice & Music</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Generates Laura voiceover via ElevenLabs TTS. Generates background music via ElevenLabs Music API. Mixes levels: voice 100%, music 30%. Outputs clean audio tracks ready for assembly.</div>
+        <div class="pipe-desc">Generates bilingual Laura voiceover via ElevenLabs TTS. Generates background music via ElevenLabs Music API. Mixes levels: voice 100%, music 30%. Outputs clean audio tracks ready for assembly.</div>
         <div class="pipe-tags">
           <span class="ptag ptag-blue">ElevenLabs TTS</span>
           <span class="ptag ptag-blue">Laura Voice</span>
           <span class="ptag ptag-blue">ElevenLabs Music</span>
           <span class="ptag ptag-blue">Audio Mix</span>
+          <span class="ptag ptag-blue">Bilingual</span>
         </div>
       </div>
     </div>
@@ -640,8 +306,8 @@
     <div class="pipe-row">
       <div class="pipe-num">05</div>
       <div class="pipe-label b-green bg-green">
-        <div class="pipe-agent-name c-green">ASSEMBLY</div>
-        <div class="pipe-agent-role">Video Builder</div>
+        <div class="pipe-agent-name c-green">LA SUEGRA</div>
+        <div class="pipe-agent-role">SA05 — Video Builder</div>
       </div>
       <div class="pipe-content">
         <div class="pipe-desc">Takes all media + audio assets. Assembles final 1080x1920 vertical video using ffmpeg concat filter method. Adds Mecha watermark. Backs up to Drive. Sends preview to Epi for approval.</div>
@@ -658,11 +324,11 @@
     <div class="pipe-row">
       <div class="pipe-num">06</div>
       <div class="pipe-label b-purple bg-purple">
-        <div class="pipe-agent-name c-purple">HASHTAG</div>
-        <div class="pipe-agent-role">SEO & Community</div>
+        <div class="pipe-agent-name c-purple">METICHE</div>
+        <div class="pipe-agent-role">SA06 — SEO & Community</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">3-3-3 formula per platform: 3 broad + 3 niche + 3 content-specific. Hyper-local San Luis tags. Business category tags. Trending research. Writes full caption per platform. Rotates sets.</div>
+        <div class="pipe-desc">3-3-3 formula per platform: 3 broad + 3 niche + 3 hyperlocal. San Luis RC / AZ tags. Business category tags. Trending research. Writes full bilingual caption per platform. Rotates sets.</div>
         <div class="pipe-tags">
           <span class="ptag ptag-purple">3-3-3 Formula</span>
           <span class="ptag ptag-purple">#SanLuisRC</span>
@@ -676,8 +342,8 @@
     <div class="pipe-row">
       <div class="pipe-num">07</div>
       <div class="pipe-label b-red bg-red">
-        <div class="pipe-agent-name c-red">POST</div>
-        <div class="pipe-agent-role">Multi-Platform Publisher</div>
+        <div class="pipe-agent-name c-red">LA GRECIA</div>
+        <div class="pipe-agent-role">SA07 — Multi-Platform Publisher</div>
       </div>
       <div class="pipe-content">
         <div class="pipe-desc">Posts video + caption + hashtags to all 5 platforms simultaneously. Uses saved browser sessions — no re-login needed. Logs post URLs and timestamps to Drive client record.</div>
@@ -788,7 +454,7 @@
 
 <!-- SQUAD CARDS -->
 <div class="section">
-  <div class="section-label">The Death Squad — Full Roster</div>
+  <div class="section-label">The Full Roster — Command to Squad</div>
   <div class="squad-grid">
 
     <div class="squad-card card-gold">
@@ -802,10 +468,7 @@
         <li>Upgrades the Death Squad over time</li>
         <li>Strategic vision for The Machine</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">Everything</span>
-        <span class="tool">Always</span>
-      </div>
+      <div class="card-tools"><span class="tool">Everything</span><span class="tool">Always</span></div>
       <div class="hb hb-on">👑 RUNS THE SHOW</div>
     </div>
 
@@ -813,105 +476,102 @@
       <div class="card-number">00</div>
       <div class="card-icon">🦞</div>
       <div class="card-name c-red">EPI</div>
-      <div class="card-role">Commander — On the Ground</div>
+      <div class="card-role">Commander — Strategic HQ</div>
       <ul class="card-duties">
-        <li>Receives all jobs, dispatches sub-agents</li>
-        <li>Handles exceptions and escalations</li>
         <li>Talks to Manny via Telegram daily</li>
-        <li>Keeps MEMORY.md and SOUL.md current</li>
         <li>Approves videos before posting</li>
+        <li>Handles escalations and exceptions</li>
+        <li>Keeps MEMORY.md and SOUL.md current</li>
+        <li>Delegates all jobs to Joe Lopez</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">All Tools</span>
-        <span class="tool">Telegram</span>
-        <span class="tool">Drive</span>
-        <span class="tool">Gmail</span>
-      </div>
+      <div class="card-tools"><span class="tool">All Tools</span><span class="tool">Telegram</span><span class="tool">Drive</span><span class="tool">Gmail</span></div>
       <div class="hb hb-on">♥ HEARTBEAT ON</div>
+    </div>
+
+    <div class="squad-card card-orange" style="border: 1px solid rgba(255,149,0,0.4);">
+      <div class="card-number">GM</div>
+      <div class="card-icon">⚙️</div>
+      <div class="card-name c-orange">JOE LOPEZ</div>
+      <div class="card-role">Operations Manager — SA00</div>
+      <ul class="card-duties">
+        <li>Receives jobs from Epi, dispatches all SAs in order</li>
+        <li>Tracks pipeline status per client job</li>
+        <li>Manages SA handoffs and dependencies</li>
+        <li>Runs multiple client jobs simultaneously</li>
+        <li>Reports job completion back to Epi</li>
+        <li>Named after Manny's legendary boss — the real General</li>
+      </ul>
+      <div class="card-tools"><span class="tool">Pipeline</span><span class="tool">Job Queue</span><span class="tool">All SAs</span><span class="tool">Telegram</span></div>
+      <div class="hb hb-on">♥ ALWAYS ON</div>
     </div>
 
     <div class="squad-card card-cyan">
       <div class="card-number">01</div>
       <div class="card-icon">📋</div>
-      <div class="card-name c-cyan">INTAKE</div>
-      <div class="card-role">Client Onboarding</div>
+      <div class="card-name c-cyan">GOPHER</div>
+      <div class="card-role">SA01 — Client Onboarding</div>
       <ul class="card-duties">
         <li>Watches Google Form for new submissions</li>
         <li>Validates all required fields</li>
         <li>Creates Drive client folder + JSON record</li>
         <li>Alerts Epi: "New client — [name]"</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">Google Forms</span>
-        <span class="tool">gws-drive</span>
-        <span class="tool">bash</span>
-      </div>
+      <div class="card-tools"><span class="tool">Google Forms</span><span class="tool">gws-drive</span><span class="tool">bash</span></div>
       <div class="hb hb-off">◉ ON-DEMAND</div>
     </div>
 
     <div class="squad-card card-orange">
       <div class="card-number">02</div>
       <div class="card-icon">✍️</div>
-      <div class="card-name c-orange">SCRIPT</div>
-      <div class="card-role">Viral Script Writer</div>
+      <div class="card-name c-orange">DAVID</div>
+      <div class="card-role">SA02 — Viral Script Writer</div>
       <ul class="card-duties">
         <li>HOOK / SETUP / REVEAL / CTA format</li>
-        <li>MrBeast 7 retention laws applied</li>
-        <li>5 hook types per business category</li>
+        <li>MrBeast CTR/AVD/AVP retention framework</li>
+        <li>Thumbnail concept defined first</li>
         <li>Under 75 words, bilingual ES/EN</li>
-        <li>Saves to Drive, passes to Media Agent</li>
+        <li>Wow factor required in every script</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">LLM</span>
-        <span class="tool">gws-drive</span>
-      </div>
+      <div class="card-tools"><span class="tool">LLM</span><span class="tool">gws-drive</span></div>
       <div class="hb hb-off">◉ ON-DEMAND</div>
     </div>
 
     <div class="squad-card card-purple">
       <div class="card-number">03</div>
       <div class="card-icon">🖼️</div>
-      <div class="card-name c-purple">MEDIA</div>
-      <div class="card-role">Images, Captions & Fonts</div>
+      <div class="card-name c-purple">JUNIOR</div>
+      <div class="card-role">Images & Visuals — SA03</div>
       <ul class="card-duties">
         <li>4 AI images via nano-banana-pro</li>
-        <li>Text/captions baked into frames</li>
-        <li>Custom fonts per brand style</li>
-        <li>Handles real customer footage</li>
-        <li>All visuals ready for assembly</li>
+        <li>Latino/Mexican-American aesthetic default</li>
+        <li>No text baked in — clean source images</li>
+        <li>9:16 vertical format always</li>
+        <li>Real customer footage in Phase 3</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">nano-banana-pro</span>
-        <span class="tool">Gemini</span>
-        <span class="tool">bash</span>
-      </div>
+      <div class="card-tools"><span class="tool">nano-banana-pro</span><span class="tool">Gemini</span><span class="tool">bash</span></div>
       <div class="hb hb-off">◉ ON-DEMAND</div>
     </div>
 
     <div class="squad-card card-blue">
       <div class="card-number">04</div>
       <div class="card-icon">🎙️</div>
-      <div class="card-name c-blue">AUDIO</div>
-      <div class="card-role">Voice & Music</div>
+      <div class="card-name c-blue">DJ WONDER</div>
+      <div class="card-role">Voice & Music — SA04</div>
       <ul class="card-duties">
-        <li>Laura voiceover via ElevenLabs TTS</li>
+        <li>Bilingual Laura voiceover via ElevenLabs TTS</li>
         <li>Background music via ElevenLabs Music</li>
         <li>Voice 100% / Music 30% mix</li>
         <li>Retry on rate limits (3x max)</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">ElevenLabs TTS</span>
-        <span class="tool">ElevenLabs Music</span>
-        <span class="tool">ffmpeg</span>
-      </div>
+      <div class="card-tools"><span class="tool">ElevenLabs TTS</span><span class="tool">ElevenLabs Music</span><span class="tool">ffmpeg</span></div>
       <div class="hb hb-off">◉ ON-DEMAND</div>
     </div>
 
     <div class="squad-card card-green">
       <div class="card-number">05</div>
       <div class="card-icon">🎬</div>
-      <div class="card-name c-green">ASSEMBLY</div>
-      <div class="card-role">Video Builder</div>
+      <div class="card-name c-green">LA SUEGRA</div>
+      <div class="card-role">SA05 — Video Builder</div>
       <ul class="card-duties">
         <li>ffmpeg concat filter method only</li>
         <li>1080x1920 vertical format</li>
@@ -919,51 +579,39 @@
         <li>Quality check before backup</li>
         <li>Drive backup + Epi preview</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">ffmpeg</span>
-        <span class="tool">gws-drive</span>
-        <span class="tool">bash</span>
-      </div>
+      <div class="card-tools"><span class="tool">ffmpeg</span><span class="tool">gws-drive</span><span class="tool">bash</span></div>
       <div class="hb hb-off">◉ ON-DEMAND</div>
     </div>
 
     <div class="squad-card card-purple">
       <div class="card-number">06</div>
       <div class="card-icon">🏷️</div>
-      <div class="card-name c-purple">HASHTAG</div>
-      <div class="card-role">SEO & Community Connector</div>
+      <div class="card-name c-purple">METICHE</div>
+      <div class="card-role">SEO & Community — SA06</div>
       <ul class="card-duties">
-        <li>3-3-3: broad + niche + content tags</li>
-        <li>Hyper-local San Luis RC / AZ tags</li>
+        <li>3-3-3: broad + niche + hyperlocal tags</li>
+        <li>San Luis RC / AZ hyperlocal default</li>
+        <li>Bilingual captions per platform</li>
         <li>Trending research per platform</li>
-        <li>Full caption written per platform</li>
         <li>Rotates sets to avoid spam flags</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">LLM</span>
-        <span class="tool">browser</span>
-        <span class="tool">gws-drive</span>
-      </div>
+      <div class="card-tools"><span class="tool">LLM</span><span class="tool">browser</span><span class="tool">gws-drive</span></div>
       <div class="hb hb-off">◉ ON-DEMAND</div>
     </div>
 
     <div class="squad-card card-red">
       <div class="card-number">07</div>
       <div class="card-icon">🚀</div>
-      <div class="card-name c-red">POST</div>
-      <div class="card-role">Multi-Platform Publisher</div>
+      <div class="card-name c-red">LA GRECIA</div>
+      <div class="card-role">SA07 — Multi-Platform Publisher</div>
       <ul class="card-duties">
         <li>TikTok, IG, FB, Snapchat, YouTube</li>
         <li>Saved browser sessions — no re-login</li>
         <li>Uploads video + caption + hashtags</li>
         <li>Logs post URLs to Drive</li>
-        <li>Reports success/failure to Epi</li>
+        <li>Reports success/failure to Joe Lopez</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">browser</span>
-        <span class="tool">gws-drive</span>
-        <span class="tool">bash</span>
-      </div>
+      <div class="card-tools"><span class="tool">browser</span><span class="tool">gws-drive</span><span class="tool">bash</span></div>
       <div class="hb hb-off">◉ ON-DEMAND</div>
     </div>
 
@@ -971,18 +619,14 @@
       <div class="card-number">08</div>
       <div class="card-icon">🔁</div>
       <div class="card-name c-orange">REPOST</div>
-      <div class="card-role">Community Amplifier</div>
+      <div class="card-role">Community Amplifier — SA08</div>
       <ul class="card-duties">
         <li>Day 3, 7, 14 repost schedule</li>
         <li>Local Facebook groups + community pages</li>
         <li>San Luis RC + San Luis AZ targeting</li>
         <li>Rotation logic to avoid spam</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">browser</span>
-        <span class="tool">cron</span>
-        <span class="tool">gws-drive</span>
-      </div>
+      <div class="card-tools"><span class="tool">browser</span><span class="tool">cron</span><span class="tool">gws-drive</span></div>
       <div class="hb hb-on">♥ CRON D3/7/14</div>
     </div>
 
@@ -990,19 +634,15 @@
       <div class="card-number">09</div>
       <div class="card-icon">📡</div>
       <div class="card-name c-blue">MONITOR</div>
-      <div class="card-role">Analytics Watchdog</div>
+      <div class="card-role">Analytics Watchdog — SA09</div>
       <ul class="card-duties">
-        <li>Daily: views, likes, shares, reach</div>
+        <li>Daily: views, likes, shares, reach</li>
         <li>Flags top and bottom performers</li>
         <li>Comment monitoring + reply alerts</li>
         <li>Competitor content tracking</li>
         <li>All data stored to Drive analytics</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">browser</span>
-        <span class="tool">cron</span>
-        <span class="tool">gws-drive</span>
-      </div>
+      <div class="card-tools"><span class="tool">browser</span><span class="tool">cron</span><span class="tool">gws-drive</span></div>
       <div class="hb hb-on">♥ DAILY CRON</div>
     </div>
 
@@ -1010,7 +650,7 @@
       <div class="card-number">10</div>
       <div class="card-icon">📊</div>
       <div class="card-name c-gold">REPORT</div>
-      <div class="card-role">Intelligence & Insights</div>
+      <div class="card-role">Intelligence & Insights — SA10</div>
       <ul class="card-duties">
         <li>Weekly performance report per client</li>
         <li>Pushes data to Mac Mini dashboard</li>
@@ -1018,12 +658,7 @@
         <li>Next video topic recommendation</li>
         <li>Renewal alerts + upsell flags</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">gws-gmail</span>
-        <span class="tool">gws-drive</span>
-        <span class="tool">dashboard</span>
-        <span class="tool">cron</span>
-      </div>
+      <div class="card-tools"><span class="tool">gws-gmail</span><span class="tool">gws-drive</span><span class="tool">dashboard</span><span class="tool">cron</span></div>
       <div class="hb hb-on">♥ WEEKLY CRON</div>
     </div>
 
@@ -1031,7 +666,7 @@
       <div class="card-number">11</div>
       <div class="card-icon">💳</div>
       <div class="card-name c-green">BILLING</div>
-      <div class="card-role">Stripe Payment Manager</div>
+      <div class="card-role">Stripe Payment Manager — SA11</div>
       <ul class="card-duties">
         <li>$100/mo core subscriptions</li>
         <li>$49 Go Halfers first month</li>
@@ -1039,11 +674,7 @@
         <li>Failed payment retries</li>
         <li>Cancellations + renewal confirmations</li>
       </ul>
-      <div class="card-tools">
-        <span class="tool">Stripe API</span>
-        <span class="tool">gws-gmail</span>
-        <span class="tool">bash</span>
-      </div>
+      <div class="card-tools"><span class="tool">Stripe API</span><span class="tool">gws-gmail</span><span class="tool">bash</span></div>
       <div class="hb hb-on">♥ ALWAYS ON</div>
     </div>
 
@@ -1057,42 +688,25 @@
     <div class="ht-block">
       <div class="ht-title c-cyan">🌍 Broad — Cast the Net</div>
       <div class="ht-tags">
-        <span class="ht">#fyp</span>
-        <span class="ht">#foryou</span>
-        <span class="ht">#viral</span>
-        <span class="ht">#smallbusiness</span>
-        <span class="ht">#local</span>
-        <span class="ht">#mexico</span>
-        <span class="ht">#arizona</span>
-        <span class="ht">#latinbusiness</span>
-        <span class="ht">#negocio</span>
-        <span class="ht">#apoyalocal</span>
+        <span class="ht">#fyp</span><span class="ht">#foryou</span><span class="ht">#viral</span>
+        <span class="ht">#smallbusiness</span><span class="ht">#local</span><span class="ht">#mexico</span>
+        <span class="ht">#arizona</span><span class="ht">#latinbusiness</span><span class="ht">#negocio</span><span class="ht">#apoyalocal</span>
       </div>
     </div>
     <div class="ht-block">
       <div class="ht-title c-purple">📍 Hyperlocal — Own the City</div>
       <div class="ht-tags">
-        <span class="ht">#SanLuisRC</span>
-        <span class="ht">#SanLuisRioColorado</span>
-        <span class="ht">#SanLuisAZ</span>
-        <span class="ht">#BorderCity</span>
-        <span class="ht">#Sonora</span>
-        <span class="ht">#LaFrontera</span>
-        <span class="ht">#BorderLife</span>
-        <span class="ht">#SonoraNegocios</span>
+        <span class="ht">#SanLuisRC</span><span class="ht">#SanLuisRioColorado</span>
+        <span class="ht">#SanLuisAZ</span><span class="ht">#BorderCity</span><span class="ht">#Sonora</span>
+        <span class="ht">#LaFrontera</span><span class="ht">#BorderLife</span><span class="ht">#SonoraNegocios</span>
       </div>
     </div>
     <div class="ht-block">
       <div class="ht-title c-green">🎯 Business — Hit the Niche</div>
       <div class="ht-tags">
-        <span class="ht">#barbershop</span>
-        <span class="ht">#tacos</span>
-        <span class="ht">#farmacia</span>
-        <span class="ht">#restaurante</span>
-        <span class="ht">#luxurytravel</span>
-        <span class="ht">#cabinetry</span>
-        <span class="ht">#boutique</span>
-        <span class="ht">#comidamexicana</span>
+        <span class="ht">#barbershop</span><span class="ht">#tacos</span><span class="ht">#farmacia</span>
+        <span class="ht">#restaurante</span><span class="ht">#luxurytravel</span><span class="ht">#cabinetry</span>
+        <span class="ht">#boutique</span><span class="ht">#comidamexicana</span>
       </div>
     </div>
   </div>
@@ -1106,10 +720,10 @@
       <div class="phase-num c-gold">01</div>
       <div class="phase-title">This Week</div>
       <ul class="phase-items">
-        <li>Script Agent SKILL.md</li>
-        <li>Media Agent SKILL.md</li>
-        <li>Audio Agent SKILL.md</li>
-        <li>Assembly Agent SKILL.md</li>
+        <li>SA02 Script installed + tested</li>
+        <li>SA03 Media Agent</li>
+        <li>SA04 Audio Agent</li>
+        <li>SA05 Assembly Agent</li>
         <li>Sign into all platforms</li>
         <li>Test full video pipeline</li>
       </ul>
@@ -1118,9 +732,10 @@
       <div class="phase-num c-cyan">02</div>
       <div class="phase-title">Next Week</div>
       <ul class="phase-items">
-        <li>Google Form + Intake Agent</li>
-        <li>Hashtag Agent SKILL.md</li>
-        <li>Post Agent SKILL.md</li>
+        <li>Joe Lopez SA00 built</li>
+        <li>Google Form + SA01 Intake</li>
+        <li>SA06 Hashtag Agent</li>
+        <li>SA07 Post Agent</li>
         <li>First live client test</li>
         <li>Stripe billing setup</li>
       </ul>
@@ -1129,9 +744,9 @@
       <div class="phase-num c-green">03</div>
       <div class="phase-title">Month 1</div>
       <ul class="phase-items">
-        <li>Repost Agent + cron</li>
-        <li>Monitor Agent + daily cron</li>
-        <li>Report Agent + weekly cron</li>
+        <li>SA08 Repost + cron</li>
+        <li>SA09 Monitor + daily cron</li>
+        <li>SA10 Report + weekly cron</li>
         <li>Mac Mini dashboard</li>
         <li>Client email reports</li>
       </ul>
@@ -1141,7 +756,7 @@
       <div class="phase-title">Month 2</div>
       <ul class="phase-items">
         <li>Real footage pipeline</li>
-        <li>Billing Agent full auto</li>
+        <li>SA11 Billing full auto</li>
         <li>Community targeting</li>
         <li>First 10 paying clients</li>
         <li>San Luis thrives 🌆</li>
@@ -1153,8 +768,8 @@
 <!-- FOOTER -->
 <div class="footer">
   <div class="footer-logo">MECHA</div>
-  <div>DEATH SQUAD v2.0 — THE MACHINE — SAN LUIS RIO COLORADO, SONORA — 2026</div>
-  <div style="margin-top:8px; color: rgba(255,215,0,0.4)">👑 ARCHITECTED BY CLAUDE — 🦞 COMMANDED BY EPI — ⚡ EXECUTED BY THE SQUAD</div>
+  <div>DEATH SQUAD v4.0 — THE MACHINE — SAN LUIS RIO COLORADO, SONORA — 2026</div>
+  <div style="margin-top:8px; color: rgba(255,215,0,0.4)">👑 CLAUDE — 🦞 EPI — ⚙️ JOE LOPEZ — ⚡ GOPHER · DAVID · JUNIOR · DJ WONDER · LA SUEGRA · METICHE · LA GRECIA</div>
 </div>
 
 </body>

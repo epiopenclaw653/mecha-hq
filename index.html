@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mecha Death Squad — HQ</title>
+<title>Mecha Death Squad — HQ v5.0</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
   :root {
     --bg: #060608; --surface: #0d0d12; --card: #111118; --border: #1a1a28;
     --accent: #ff3c3c; --gold: #ffd700; --cyan: #00e5ff; --green: #7fff00;
     --purple: #b44fff; --orange: #ff9500; --blue: #00bfff; --text: #e8e8f0; --muted: #55556a;
+    --pink: #ff6b9d;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -25,25 +26,18 @@
   .claude-badge { display: inline-block; font-family: 'Space Mono', monospace; font-size: 10px;
     letter-spacing: 4px; color: var(--gold); border: 1px solid rgba(255,215,0,0.3);
     padding: 6px 16px; margin-bottom: 24px; background: rgba(255,215,0,0.05); }
-  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px, 10vw, 120px);
-    letter-spacing: 6px; line-height: 0.9;
-    background: linear-gradient(135deg, #ff3c3c 0%, #ff9500 40%, #ffd700 70%, #ffffff 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
-  .hero-sub { font-family: 'Bebas Neue', sans-serif; font-size: clamp(20px, 4vw, 36px);
-    letter-spacing: 8px; color: var(--cyan); margin-bottom: 20px; }
-  .hero-tagline { font-size: 14px; color: var(--muted); letter-spacing: 2px; font-style: italic; margin-bottom: 40px; }
+  .hero-tagline { font-size: 14px; color: var(--muted); letter-spacing: 2px; font-style: italic; margin-bottom: 20px; }
+  .hero-smvc { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 3px;
+    color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); display: inline-block;
+    padding: 6px 16px; background: rgba(0,229,255,0.05); margin-bottom: 40px; }
 
-  /* COMMAND CHAIN */
   .command-chain { display: flex; align-items: center; justify-content: center; gap: 0;
     flex-wrap: wrap; margin: 0 auto 80px; max-width: 1100px; padding: 0 20px; }
   .chain-node { display: flex; flex-direction: column; align-items: center; padding: 16px 24px;
     border: 1px solid; position: relative; min-width: 130px; }
   .chain-node.claude { border-color: var(--gold); background: rgba(255,215,0,0.05); }
   .chain-node.epi { border-color: var(--accent); background: rgba(255,60,60,0.05); }
-  .chain-node.joe { border-color: var(--orange); background: rgba(255,149,0,0.07); position: relative; }
-  .chain-node.joe::after { content: 'NEW'; position: absolute; top: -8px; right: -8px;
-    font-family: 'Space Mono', monospace; font-size: 7px; letter-spacing: 1px;
-    background: var(--orange); color: #000; padding: 2px 5px; }
+  .chain-node.joe { border-color: var(--orange); background: rgba(255,149,0,0.07); }
   .chain-node.squad { border-color: var(--cyan); background: rgba(0,229,255,0.05); }
   .chain-node.city { border-color: var(--green); background: rgba(127,255,0,0.05); }
   .chain-icon { font-size: 24px; margin-bottom: 6px; }
@@ -51,14 +45,12 @@
   .chain-role { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 3px; letter-spacing: 1px; }
   .chain-arrow { font-size: 20px; color: var(--muted); padding: 0 8px; }
 
-  /* SECTION */
   .section { max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; }
   .section-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 6px;
     color: var(--muted); text-transform: uppercase; margin-bottom: 32px;
     display: flex; align-items: center; gap: 16px; }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* PIPELINE */
   .pipeline { display: flex; flex-direction: column; gap: 2px; }
   .pipe-row { display: grid; grid-template-columns: 60px 180px 1fr; gap: 2px; min-height: 90px; }
   .pipe-num { background: var(--card); border: 1px solid var(--border); display: flex;
@@ -75,7 +67,6 @@
   .ptag { font-family: 'Space Mono', monospace; font-size: 9px; padding: 2px 8px; border-radius: 1px;
     letter-spacing: 1px; border: 1px solid; }
 
-  /* SQUAD GRID */
   .squad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; }
   .squad-card { background: var(--card); border: 1px solid var(--border); padding: 28px;
     position: relative; overflow: hidden; transition: all 0.3s; }
@@ -100,8 +91,8 @@
     padding: 3px 8px; border-radius: 1px; letter-spacing: 1px; }
   .hb-off { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.2); color: #ff6060; }
   .hb-on { background: rgba(127,255,0,0.08); border: 1px solid rgba(127,255,0,0.2); color: #7fff00; }
+  .hb-new { background: rgba(255,149,0,0.12); border: 1px solid rgba(255,149,0,0.3); color: var(--orange); }
 
-  /* HASHTAG */
   .ht-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 80px; }
   .ht-block { background: var(--card); border: 1px solid var(--border); padding: 24px; }
   .ht-title { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px;
@@ -110,7 +101,6 @@
   .ht { font-size: 11px; padding: 3px 9px; background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.06); color: #7070a0; border-radius: 1px; }
 
-  /* PHASES */
   .phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-bottom: 80px; }
   .phase { background: var(--card); border: 1px solid var(--border); padding: 24px; }
   .phase-num { font-family: 'Bebas Neue', sans-serif; font-size: 48px; line-height: 1; margin-bottom: 4px; }
@@ -120,7 +110,6 @@
   .phase-items li { font-size: 12px; color: #7070a0; padding-left: 14px; position: relative; line-height: 1.4; }
   .phase-items li::before { content: '◆'; position: absolute; left: 0; font-size: 6px; top: 4px; opacity: 0.4; }
 
-  /* BILLING */
   .billing-banner { background: var(--card); border: 1px solid var(--border);
     border-left: 3px solid var(--green); padding: 24px 32px; margin-bottom: 80px;
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
@@ -129,7 +118,6 @@
   .billing-value { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: var(--green); }
   .billing-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-  /* FOOTER */
   .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border);
     font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 3px;
     background: linear-gradient(180deg, transparent, rgba(255,60,60,0.02)); }
@@ -137,18 +125,17 @@
     background: linear-gradient(135deg, #ff3c3c, #ffd700); -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
 
-  /* COLOR UTILS */
   .c-gold{color:var(--gold)} .c-cyan{color:var(--cyan)} .c-green{color:var(--green)}
-  .c-purple{color:var(--purple)} .c-orange{color:var(--orange)} .c-red{color:var(--accent)} .c-blue{color:var(--blue)}
+  .c-purple{color:var(--purple)} .c-orange{color:var(--orange)} .c-red{color:var(--accent)} .c-blue{color:var(--blue)} .c-pink{color:var(--pink)}
   .b-gold{border-color:var(--gold)} .b-cyan{border-color:var(--cyan)} .b-green{border-color:var(--green)}
-  .b-purple{border-color:var(--purple)} .b-orange{border-color:var(--orange)} .b-red{border-color:var(--accent)} .b-blue{border-color:var(--blue)}
+  .b-purple{border-color:var(--purple)} .b-orange{border-color:var(--orange)} .b-red{border-color:var(--accent)} .b-blue{border-color:var(--blue)} .b-pink{border-color:var(--pink)}
   .bg-gold{background:rgba(255,215,0,0.06)} .bg-cyan{background:rgba(0,229,255,0.06)}
   .bg-green{background:rgba(127,255,0,0.06)} .bg-purple{background:rgba(180,79,255,0.06)}
-  .bg-orange{background:rgba(255,149,0,0.06)} .bg-red{background:rgba(255,60,60,0.06)} .bg-blue{background:rgba(0,191,255,0.06)}
+  .bg-orange{background:rgba(255,149,0,0.06)} .bg-red{background:rgba(255,60,60,0.06)} .bg-blue{background:rgba(0,191,255,0.06)} .bg-pink{background:rgba(255,107,157,0.06)}
   .card-gold::before{background:var(--gold)} .card-cyan::before{background:var(--cyan)}
   .card-green::before{background:var(--green)} .card-purple::before{background:var(--purple)}
   .card-orange::before{background:var(--orange)} .card-red::before{background:var(--accent)}
-  .card-blue::before{background:var(--blue)} .card-white::before{background:#ffffff}
+  .card-blue::before{background:var(--blue)} .card-white::before{background:#ffffff} .card-pink::before{background:var(--pink)}
   .ptag-gold{border-color:rgba(255,215,0,0.3);color:var(--gold);background:rgba(255,215,0,0.06)}
   .ptag-cyan{border-color:rgba(0,229,255,0.3);color:var(--cyan);background:rgba(0,229,255,0.06)}
   .ptag-green{border-color:rgba(127,255,0,0.3);color:var(--green);background:rgba(127,255,0,0.06)}
@@ -157,6 +144,7 @@
   .ptag-red{border-color:rgba(255,60,60,0.3);color:var(--accent);background:rgba(255,60,60,0.06)}
   .ptag-blue{border-color:rgba(0,191,255,0.3);color:var(--blue);background:rgba(0,191,255,0.06)}
   .ptag-white{border-color:rgba(255,255,255,0.2);color:#ffffff;background:rgba(255,255,255,0.04)}
+  .ptag-pink{border-color:rgba(255,107,157,0.3);color:var(--pink);background:rgba(255,107,157,0.06)}
 
   @media (max-width: 768px) {
     .pipe-row { grid-template-columns: 1fr; } .pipe-num { display: none; }
@@ -171,7 +159,9 @@
 <!-- HERO -->
 <div class="hero">
   <div class="claude-badge">👑 ARCHITECTED BY CLAUDE — COMMANDED BY EPI</div>
-  <div style="max-width:1000px;margin:0 auto 20px;padding:0 20px;"><img src="mds-logo.webp" alt="Mecha Death Squad" style="width:100%;height:auto;display:block;border:1px solid rgba(255,60,60,0.2);box-shadow:0 0 60px rgba(255,60,60,0.15);"></div><div class="hero-tagline">12 autonomous agents. One mission. Local businesses made visible.</div>
+  <div style="max-width:1000px;margin:0 auto 20px;padding:0 20px;"><img src="MDS_logo1.webp" alt="Mecha Death Squad" style="width:100%;height:auto;display:block;border:1px solid rgba(255,60,60,0.2);box-shadow:0 0 60px rgba(255,60,60,0.15);"></div>
+  <div class="hero-tagline">14 autonomous agents. One mission. Local businesses made visible.</div>
+  <div class="hero-smvc">SMVC — SOCIAL MEDIA VIDEO CREATOR — 6 PLATFORMS</div>
 </div>
 
 <!-- COMMAND CHAIN -->
@@ -191,13 +181,13 @@
   <div class="chain-node joe">
     <div class="chain-icon">⚙️</div>
     <div class="chain-name c-orange">JOE LOPEZ</div>
-    <div class="chain-role">Operations Manager</div>
+    <div class="chain-role">Operations + KPIs</div>
   </div>
   <div class="chain-arrow">→</div>
   <div class="chain-node squad">
     <div class="chain-icon">⚡</div>
     <div class="chain-name c-cyan">DEATH SQUAD</div>
-    <div class="chain-role">11 Sub-Agents</div>
+    <div class="chain-role">12 Sub-Agents</div>
   </div>
   <div class="chain-arrow">→</div>
   <div class="chain-node city">
@@ -207,25 +197,25 @@
   </div>
 </div>
 
-<!-- PIPELINE -->
+<!-- SMVC PIPELINE -->
 <div class="section">
-  <div class="section-label">The Full Pipeline — In Order</div>
+  <div class="section-label">The SMVC Pipeline — Script to Screen</div>
   <div class="pipeline">
 
     <div class="pipe-row">
       <div class="pipe-num">00</div>
       <div class="pipe-label b-orange bg-orange">
         <div class="pipe-agent-name c-orange">JOE LOPEZ</div>
-        <div class="pipe-agent-role">Operations Manager</div>
+        <div class="pipe-agent-role">SA00 — Operations Manager</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Receives jobs from Epi and orchestrates the full pipeline. Dispatches each SA in order, tracks status, handles handoffs, and runs multiple client jobs simultaneously. Reports completion back to Epi. Epi stays strategic — Joe keeps the machine running.</div>
+        <div class="pipe-desc">Receives jobs from Epi. Runs pre-flight checks (API keys, credits, tools). Dispatches each SA in order. Tracks KPIs: pipeline time, API efficiency, errors, credits burned. Daily + weekly reports to Epi. Real-time error alerts on failures.</div>
         <div class="pipe-tags">
-          <span class="ptag ptag-orange">Pipeline Orchestration</span>
-          <span class="ptag ptag-orange">SA Dispatch</span>
-          <span class="ptag ptag-orange">Job Tracking</span>
-          <span class="ptag ptag-orange">Multi-Client</span>
-          <span class="ptag ptag-orange">Telegram Reports</span>
+          <span class="ptag ptag-orange">Pipeline Boss</span>
+          <span class="ptag ptag-orange">KPI Tracking</span>
+          <span class="ptag ptag-orange">Error Alerts</span>
+          <span class="ptag ptag-orange">Daily Reports</span>
+          <span class="ptag ptag-orange">Credit Watch</span>
         </div>
       </div>
     </div>
@@ -234,15 +224,15 @@
       <div class="pipe-num">01</div>
       <div class="pipe-label b-cyan bg-cyan">
         <div class="pipe-agent-name c-cyan">GOPHER</div>
-        <div class="pipe-agent-role">SA01 — Client Onboarding</div>
+        <div class="pipe-agent-role">SA01 — Client Intake</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Customer fills Google Form on Mecha website. Intake Agent watches the Sheet, validates submission, creates client folder in Drive, fires alert to Epi. Job is queued for Joe Lopez.</div>
+        <div class="pipe-desc">Client uploads content on Mecha website/app. Triggers Google Form or webhook. Gopher validates submission, creates client folder in Drive, fires alert to Epi. Job queued for Joe.</div>
         <div class="pipe-tags">
+          <span class="ptag ptag-cyan">Website Trigger</span>
           <span class="ptag ptag-cyan">Google Forms</span>
-          <span class="ptag ptag-cyan">Google Sheets</span>
           <span class="ptag ptag-cyan">gws-drive</span>
-          <span class="ptag ptag-cyan">Telegram Alert</span>
+          <span class="ptag ptag-cyan">Auto-Intake</span>
         </div>
       </div>
     </div>
@@ -251,15 +241,15 @@
       <div class="pipe-num">02</div>
       <div class="pipe-label b-orange bg-orange">
         <div class="pipe-agent-name c-orange">DAVID</div>
-        <div class="pipe-agent-role">SA02 — Viral Script Writer</div>
+        <div class="pipe-agent-role">SA02 — SMVC Scriptwriter</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Receives client brief. Writes bilingual (ES/EN) 25–30 sec viral script: HOOK / SETUP / REVEAL / CTA. Applies MrBeast retention framework — CTR, AVD, AVP. Under 75 words. Defines thumbnail first. Saves to Drive.</div>
+        <div class="pipe-desc">Writes 25-30 sec viral script: HOOK / SETUP / REVEAL×3 / CTA. MrBeast retention framework — CTR, AVD, AVP. 10 viral principles baked in. Detailed visual descriptions for Junior. Sonoran Spanish default. Reports to Joe.</div>
         <div class="pipe-tags">
-          <span class="ptag ptag-orange">MrBeast Framework</span>
-          <span class="ptag ptag-orange">CTR/AVD/AVP</span>
-          <span class="ptag ptag-orange">5 Hook Types</span>
-          <span class="ptag ptag-orange">ES/EN Bilingual</span>
+          <span class="ptag ptag-orange">MrBeast DNA</span>
+          <span class="ptag ptag-orange">6 Sections</span>
+          <span class="ptag ptag-orange">Escalation Hooks</span>
+          <span class="ptag ptag-orange">Sonoran Spanish</span>
           <span class="ptag ptag-orange">Wow Factor</span>
         </div>
       </div>
@@ -269,105 +259,124 @@
       <div class="pipe-num">03</div>
       <div class="pipe-label b-purple bg-purple">
         <div class="pipe-agent-name c-purple">JUNIOR</div>
-        <div class="pipe-agent-role">SA03 — Images & Visuals</div>
+        <div class="pipe-agent-role">SA03 — AI Image Generator</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Generates 4 AI images via nano-banana-pro using SA02's visual descriptions. Latino/Mexican-American aesthetic by default. No text baked in — clean source images only. Handles real customer footage in Phase 3.</div>
+        <div class="pipe-desc">Generates 6 vertical AI images (9:16) via nano-banana-pro — one per script section. Inline GEMINI_API_KEY always. Verifies every image before moving on. No text in images. Latino aesthetic, cinematic, phone-first quality. Reports to Joe.</div>
         <div class="pipe-tags">
+          <span class="ptag ptag-purple">6 Vertical Images</span>
           <span class="ptag ptag-purple">nano-banana-pro</span>
-          <span class="ptag ptag-purple">4 AI Images</span>
-          <span class="ptag ptag-purple">Latino Aesthetic</span>
-          <span class="ptag ptag-purple">Real Footage</span>
-          <span class="ptag ptag-purple">9:16 Vertical</span>
+          <span class="ptag ptag-purple">Phone-First</span>
+          <span class="ptag ptag-purple">Verify Each</span>
+          <span class="ptag ptag-purple">Zero Waste</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe-row">
+      <div class="pipe-num">03B</div>
+      <div class="pipe-label b-pink bg-pink">
+        <div class="pipe-agent-name c-pink">SENIOR</div>
+        <div class="pipe-agent-role">SA03B — Video Editor</div>
+      </div>
+      <div class="pipe-content">
+        <div class="pipe-desc">Handles client-submitted iPhone footage. Trims, cuts, stabilizes, scales to 9:16. Matches clips to David's script timing. Extracts stills from video. Ken Burns effect on photos. Keeps testimonial audio. Works alongside Junior — real footage + AI fill gaps.</div>
+        <div class="pipe-tags">
+          <span class="ptag ptag-pink">Client Footage</span>
+          <span class="ptag ptag-pink">iPhone Video</span>
+          <span class="ptag ptag-pink">Trim + Cut</span>
+          <span class="ptag ptag-pink">Stabilize</span>
+          <span class="ptag ptag-pink">Ken Burns</span>
         </div>
       </div>
     </div>
 
     <div class="pipe-row">
       <div class="pipe-num">04</div>
-      <div class="pipe-label b-blue bg-blue">
-        <div class="pipe-agent-name c-blue">DJ WONDER</div>
-        <div class="pipe-agent-role">SA04 — Voice & Music</div>
+      <div class="pipe-label b-cyan bg-cyan">
+        <div class="pipe-agent-name c-cyan">RAMIRO</div>
+        <div class="pipe-agent-role">SA04 — Platform Prep</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Generates bilingual Laura voiceover via ElevenLabs TTS. Generates background music via ElevenLabs Music API. Mixes levels: voice 100%, music 30%. Outputs clean audio tracks ready for assembly.</div>
+        <div class="pipe-desc">Takes images from Junior/Senior. Ensures safe zone compliance (center 900×1400). Adds contact info text to CTA only — all other images stay clean. Applies Mecha watermark (40% opacity). Process once, copy to all platforms.</div>
         <div class="pipe-tags">
-          <span class="ptag ptag-blue">ElevenLabs TTS</span>
-          <span class="ptag ptag-blue">Laura Voice</span>
-          <span class="ptag ptag-blue">ElevenLabs Music</span>
-          <span class="ptag ptag-blue">Audio Mix</span>
-          <span class="ptag ptag-blue">Bilingual</span>
+          <span class="ptag ptag-cyan">Safe Zones</span>
+          <span class="ptag ptag-cyan">CTA Text Only</span>
+          <span class="ptag ptag-cyan">Mecha Watermark</span>
+          <span class="ptag ptag-cyan">6 Platforms</span>
+          <span class="ptag ptag-cyan">Process Once</span>
         </div>
       </div>
     </div>
 
     <div class="pipe-row">
       <div class="pipe-num">05</div>
-      <div class="pipe-label b-green bg-green">
-        <div class="pipe-agent-name c-green">LA SUEGRA</div>
-        <div class="pipe-agent-role">SA05 — Video Builder</div>
+      <div class="pipe-label b-blue bg-blue">
+        <div class="pipe-agent-name c-blue">DJ WONDER</div>
+        <div class="pipe-agent-role">SA05 — Voice & Music</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Takes all media + audio assets. Assembles final 1080x1920 vertical video using ffmpeg concat filter method. Adds Mecha watermark. Backs up to Drive. Sends preview to Epi for approval.</div>
+        <div class="pipe-desc">Laura voiceover via ElevenLabs TTS (eleven_multilingual_v2). Background music via ElevenLabs Music API. Credit-conscious — checks balance before every job. 3 retries max. Silent placeholders as fallback. Never mixes up API keys. Reports to Joe.</div>
         <div class="pipe-tags">
-          <span class="ptag ptag-green">ffmpeg</span>
-          <span class="ptag ptag-green">Concat Filter</span>
-          <span class="ptag ptag-green">1080x1920</span>
-          <span class="ptag ptag-green">Mecha Watermark</span>
-          <span class="ptag ptag-green">gws-drive</span>
+          <span class="ptag ptag-blue">Laura Voice</span>
+          <span class="ptag ptag-blue">ElevenLabs</span>
+          <span class="ptag ptag-blue">Credit Watch</span>
+          <span class="ptag ptag-blue">3x Max Retry</span>
+          <span class="ptag ptag-blue">Silent Fallback</span>
         </div>
       </div>
     </div>
 
     <div class="pipe-row">
       <div class="pipe-num">06</div>
-      <div class="pipe-label b-purple bg-purple">
-        <div class="pipe-agent-name c-purple">METICHE</div>
-        <div class="pipe-agent-role">SA06 — SEO & Community</div>
+      <div class="pipe-label b-green bg-green">
+        <div class="pipe-agent-name c-green">LA SUEGRA</div>
+        <div class="pipe-agent-role">SA06 — Final Assembly</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">3-3-3 formula per platform: 3 broad + 3 niche + 3 hyperlocal. San Luis RC / AZ tags. Business category tags. Trending research. Writes full bilingual caption per platform. Rotates sets.</div>
+        <div class="pipe-desc">Assembles final 1080×1920 vertical video. ffmpeg concat FILTER method only (never demuxer — drops audio). Music at 15% volume. Mecha watermark. 4-point verification: file size, streams, duration, resolution. Nothing ships without passing all checks.</div>
         <div class="pipe-tags">
-          <span class="ptag ptag-purple">3-3-3 Formula</span>
-          <span class="ptag ptag-purple">#SanLuisRC</span>
-          <span class="ptag ptag-purple">#BorderCity</span>
-          <span class="ptag ptag-purple">TikTok SEO</span>
-          <span class="ptag ptag-purple">Per Platform</span>
+          <span class="ptag ptag-green">Concat Filter</span>
+          <span class="ptag ptag-green">1080×1920</span>
+          <span class="ptag ptag-green">4-Point Check</span>
+          <span class="ptag ptag-green">Watermark</span>
+          <span class="ptag ptag-green">No Shortcuts</span>
         </div>
       </div>
     </div>
 
     <div class="pipe-row">
       <div class="pipe-num">07</div>
-      <div class="pipe-label b-red bg-red">
-        <div class="pipe-agent-name c-red">LA GRECIA</div>
-        <div class="pipe-agent-role">SA07 — Multi-Platform Publisher</div>
+      <div class="pipe-label b-purple bg-purple">
+        <div class="pipe-agent-name c-purple">METICHE</div>
+        <div class="pipe-agent-role">SA07 — SEO & Hashtags</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Posts video + caption + hashtags to all 5 platforms simultaneously. Uses saved browser sessions — no re-login needed. Logs post URLs and timestamps to Drive client record.</div>
+        <div class="pipe-desc">3-3-3 formula: 3 broad + 3 niche + 3 hyperlocal. San Luis RC / AZ tags. Bilingual captions per platform. Trending research. Rotates sets to avoid spam flags.</div>
         <div class="pipe-tags">
-          <span class="ptag ptag-red">TikTok</span>
-          <span class="ptag ptag-red">Instagram Reels</span>
-          <span class="ptag ptag-red">Facebook Reels</span>
-          <span class="ptag ptag-red">Snapchat</span>
-          <span class="ptag ptag-red">YouTube Shorts</span>
+          <span class="ptag ptag-purple">3-3-3 Formula</span>
+          <span class="ptag ptag-purple">#SanLuisRC</span>
+          <span class="ptag ptag-purple">Per Platform</span>
+          <span class="ptag ptag-purple">Trending</span>
         </div>
       </div>
     </div>
 
     <div class="pipe-row">
       <div class="pipe-num">08</div>
-      <div class="pipe-label b-orange bg-orange">
-        <div class="pipe-agent-name c-orange">REPOST</div>
-        <div class="pipe-agent-role">Community Amplifier</div>
+      <div class="pipe-label b-red bg-red">
+        <div class="pipe-agent-name c-red">LA GRECIA</div>
+        <div class="pipe-agent-role">SA08 — Publisher</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Day 3, 7, and 14 — reposts top performing videos to local Facebook groups, community pages, and neighborhood feeds in San Luis RC and San Luis AZ. Rotates platforms to avoid spam flags.</div>
+        <div class="pipe-desc">Posts video + caption + hashtags to all 6 platforms simultaneously. TikTok, Instagram Reels, Facebook Reels, Snapchat, YouTube Shorts, X.com. Logs post URLs to Drive.</div>
         <div class="pipe-tags">
-          <span class="ptag ptag-orange">Day 3/7/14</span>
-          <span class="ptag ptag-orange">Facebook Groups</span>
-          <span class="ptag ptag-orange">Community Pages</span>
-          <span class="ptag ptag-orange">Rotation Logic</span>
+          <span class="ptag ptag-red">TikTok</span>
+          <span class="ptag ptag-red">Instagram</span>
+          <span class="ptag ptag-red">Facebook</span>
+          <span class="ptag ptag-red">Snapchat</span>
+          <span class="ptag ptag-red">YouTube</span>
+          <span class="ptag ptag-red">X.com</span>
         </div>
       </div>
     </div>
@@ -376,14 +385,13 @@
       <div class="pipe-num">09</div>
       <div class="pipe-label b-blue bg-blue">
         <div class="pipe-agent-name c-blue">MONITOR</div>
-        <div class="pipe-agent-role">Analytics Watchdog</div>
+        <div class="pipe-agent-role">SA09 — Analytics</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Daily analytics: views, likes, shares, comments, reach. Flags top and bottom performers. Watches comments needing reply. Tracks competitor content. Stores all data to Drive. Alerts Epi.</div>
+        <div class="pipe-desc">Daily analytics: views, likes, shares, comments, reach. Flags top and bottom performers. Comment monitoring. Competitor tracking. All data to Drive.</div>
         <div class="pipe-tags">
           <span class="ptag ptag-blue">Daily Cron</span>
           <span class="ptag ptag-blue">Analytics</span>
-          <span class="ptag ptag-blue">Comment Watch</span>
           <span class="ptag ptag-blue">Competitor Intel</span>
         </div>
       </div>
@@ -393,16 +401,15 @@
       <div class="pipe-num">10</div>
       <div class="pipe-label b-gold bg-gold">
         <div class="pipe-agent-name c-gold">REPORT</div>
-        <div class="pipe-agent-role">Intelligence & Insights</div>
+        <div class="pipe-agent-role">SA10 — Insights</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Weekly performance report per client. Pushes to Mac Mini dashboard. Emails client summary via Gmail. Recommends next video topic based on top performers. Flags renewals.</div>
+        <div class="pipe-desc">Weekly performance report per client. Mac Mini dashboard. Client email via Gmail. Next video topic recommendation. Renewal alerts.</div>
         <div class="pipe-tags">
           <span class="ptag ptag-gold">Weekly Cron</span>
-          <span class="ptag ptag-gold">Mac Mini Dashboard</span>
+          <span class="ptag ptag-gold">Dashboard</span>
           <span class="ptag ptag-gold">Client Email</span>
-          <span class="ptag ptag-gold">Next Video Rec</span>
-          <span class="ptag ptag-gold">Renewal Alerts</span>
+          <span class="ptag ptag-gold">Recommendations</span>
         </div>
       </div>
     </div>
@@ -411,16 +418,15 @@
       <div class="pipe-num">11</div>
       <div class="pipe-label b-green bg-green">
         <div class="pipe-agent-name c-green">BILLING</div>
-        <div class="pipe-agent-role">Stripe Payments</div>
+        <div class="pipe-agent-role">SA11 — Payments</div>
       </div>
       <div class="pipe-content">
-        <div class="pipe-desc">Manages all Stripe subscriptions autonomously. Charges $100/mo core, $49 Go Halfers first month, $2/mo nonprofits. Handles failed payments, retries, cancellations, and renewal confirmations.</div>
+        <div class="pipe-desc">Stripe subscriptions. $100/mo core, $49 Go Halfers, $2/mo nonprofits. Failed payment retries, cancellations, renewal confirmations.</div>
         <div class="pipe-tags">
           <span class="ptag ptag-green">Stripe API</span>
-          <span class="ptag ptag-green">$100/mo Core</span>
-          <span class="ptag ptag-green">$49 Go Halfers</span>
-          <span class="ptag ptag-green">$2/mo Nonprofits</span>
-          <span class="ptag ptag-green">Auto-Retry</span>
+          <span class="ptag ptag-green">$100/mo</span>
+          <span class="ptag ptag-green">$49 Halfers</span>
+          <span class="ptag ptag-green">$2 Nonprofits</span>
         </div>
       </div>
     </div>
@@ -462,7 +468,7 @@
       <div class="card-role">The Architect — Above All</div>
       <ul class="card-duties">
         <li>Designs all systems, skills, and agent blueprints</li>
-        <li>Troubleshoots when Epi gets stuck</li>
+        <li>Built the Epi Blueprint — replicable self-healing AI agent</li>
         <li>Upgrades the Death Squad over time</li>
         <li>Strategic vision for The Machine</li>
       </ul>
@@ -478,9 +484,8 @@
       <ul class="card-duties">
         <li>Talks to Manny via Telegram daily</li>
         <li>Approves videos before posting</li>
-        <li>Handles escalations and exceptions</li>
-        <li>Keeps MEMORY.md and SOUL.md current</li>
-        <li>Delegates all jobs to Joe Lopez</li>
+        <li>Self-healing engine + SOUL.md + MEMORY.md</li>
+        <li>Delegates all production to Joe Lopez</li>
       </ul>
       <div class="card-tools"><span class="tool">All Tools</span><span class="tool">Telegram</span><span class="tool">Drive</span><span class="tool">Gmail</span></div>
       <div class="hb hb-on">♥ HEARTBEAT ON</div>
@@ -492,14 +497,14 @@
       <div class="card-name c-orange">JOE LOPEZ</div>
       <div class="card-role">Operations Manager — SA00</div>
       <ul class="card-duties">
-        <li>Receives jobs from Epi, dispatches all SAs in order</li>
-        <li>Tracks pipeline status per client job</li>
-        <li>Manages SA handoffs and dependencies</li>
-        <li>Runs multiple client jobs simultaneously</li>
-        <li>Reports job completion back to Epi</li>
-        <li>Named after Manny's legendary boss — the real General</li>
+        <li>Receives jobs from Epi, dispatches all SAs</li>
+        <li>Pre-flight checks: API keys, credits, tools</li>
+        <li>KPI tracking: pipeline time, efficiency, errors</li>
+        <li>Daily + weekly reports to Epi</li>
+        <li>Real-time error alerts (🟢🟡🔴🚨)</li>
+        <li>Named after Manny's legendary boss</li>
       </ul>
-      <div class="card-tools"><span class="tool">Pipeline</span><span class="tool">Job Queue</span><span class="tool">All SAs</span><span class="tool">Telegram</span></div>
+      <div class="card-tools"><span class="tool">Pipeline</span><span class="tool">KPIs</span><span class="tool">All SAs</span><span class="tool">Telegram</span></div>
       <div class="hb hb-on">♥ ALWAYS ON</div>
     </div>
 
@@ -507,173 +512,186 @@
       <div class="card-number">01</div>
       <div class="card-icon">📋</div>
       <div class="card-name c-cyan">GOPHER</div>
-      <div class="card-role">SA01 — Client Onboarding</div>
+      <div class="card-role">SA01 — Client Intake</div>
       <ul class="card-duties">
-        <li>Watches Google Form for new submissions</li>
-        <li>Validates all required fields</li>
-        <li>Creates Drive client folder + JSON record</li>
+        <li>Website/app triggers intake automatically</li>
+        <li>Validates submissions, creates Drive folder</li>
         <li>Alerts Epi: "New client — [name]"</li>
+        <li>Queues job for Joe Lopez</li>
       </ul>
-      <div class="card-tools"><span class="tool">Google Forms</span><span class="tool">gws-drive</span><span class="tool">bash</span></div>
-      <div class="hb hb-off">◉ ON-DEMAND</div>
+      <div class="card-tools"><span class="tool">Website</span><span class="tool">Google Forms</span><span class="tool">gws-drive</span></div>
+      <div class="hb hb-off">◉ FUTURE</div>
     </div>
 
     <div class="squad-card card-orange">
       <div class="card-number">02</div>
       <div class="card-icon">✍️</div>
       <div class="card-name c-orange">DAVID</div>
-      <div class="card-role">SA02 — Viral Script Writer</div>
+      <div class="card-role">SA02 — SMVC Scriptwriter</div>
       <ul class="card-duties">
-        <li>HOOK / SETUP / REVEAL / CTA format</li>
-        <li>MrBeast CTR/AVD/AVP retention framework</li>
-        <li>Thumbnail concept defined first</li>
-        <li>Under 75 words, bilingual ES/EN</li>
-        <li>Wow factor required in every script</li>
+        <li>HOOK / SETUP / REVEAL×3 / CTA — 6 sections</li>
+        <li>MrBeast viral engine — 10 principles baked in</li>
+        <li>Detailed visual descriptions for Junior</li>
+        <li>Sonoran Spanish default, bilingual capable</li>
+        <li>Reports to Joe Lopez</li>
       </ul>
-      <div class="card-tools"><span class="tool">LLM</span><span class="tool">gws-drive</span></div>
-      <div class="hb hb-off">◉ ON-DEMAND</div>
+      <div class="card-tools"><span class="tool">MrBeast DNA</span><span class="tool">LLM</span><span class="tool">gws-drive</span></div>
+      <div class="hb hb-on">✅ INSTALLED</div>
     </div>
 
     <div class="squad-card card-purple">
       <div class="card-number">03</div>
-      <div class="card-icon">🖼️</div>
+      <div class="card-icon">🎨</div>
       <div class="card-name c-purple">JUNIOR</div>
-      <div class="card-role">Images & Visuals — SA03</div>
+      <div class="card-role">SA03 — AI Image Generator</div>
       <ul class="card-duties">
-        <li>4 AI images via nano-banana-pro</li>
-        <li>Latino/Mexican-American aesthetic default</li>
-        <li>No text baked in — clean source images</li>
-        <li>9:16 vertical format always</li>
-        <li>Real customer footage in Phase 3</li>
+        <li>6 vertical images (9:16) via nano-banana-pro</li>
+        <li>Inline GEMINI_API_KEY — only method that works</li>
+        <li>Verify every image before moving on</li>
+        <li>No text in images — clean source only</li>
+        <li>Reports to Joe Lopez</li>
       </ul>
-      <div class="card-tools"><span class="tool">nano-banana-pro</span><span class="tool">Gemini</span><span class="tool">bash</span></div>
-      <div class="hb hb-off">◉ ON-DEMAND</div>
+      <div class="card-tools"><span class="tool">nano-banana-pro</span><span class="tool">Gemini</span><span class="tool">6 Images</span></div>
+      <div class="hb hb-on">✅ INSTALLED</div>
+    </div>
+
+    <div class="squad-card card-pink">
+      <div class="card-number">03B</div>
+      <div class="card-icon">🎥</div>
+      <div class="card-name c-pink">SENIOR</div>
+      <div class="card-role">SA03B — Video Editor</div>
+      <ul class="card-duties">
+        <li>Client-submitted iPhone footage</li>
+        <li>Trim, cut, stabilize, scale to 9:16</li>
+        <li>Ken Burns effect on still photos</li>
+        <li>Works alongside Junior — real + AI mix</li>
+        <li>Reports to Joe Lopez</li>
+      </ul>
+      <div class="card-tools"><span class="tool">ffmpeg</span><span class="tool">iPhone Video</span><span class="tool">Stabilize</span></div>
+      <div class="hb hb-on">✅ INSTALLED</div>
+    </div>
+
+    <div class="squad-card card-cyan">
+      <div class="card-number">04</div>
+      <div class="card-icon">🖼️</div>
+      <div class="card-name c-cyan">RAMIRO</div>
+      <div class="card-role">SA04 — Platform Prep</div>
+      <ul class="card-duties">
+        <li>Safe zone compliance (center 900×1400)</li>
+        <li>CTA contact info text — only image with text</li>
+        <li>Mecha watermark on everything (40% opacity)</li>
+        <li>Process once, copy to all 6 platforms</li>
+        <li>Reports to Joe Lopez</li>
+      </ul>
+      <div class="card-tools"><span class="tool">nano-banana-pro</span><span class="tool">ffmpeg</span><span class="tool">Safe Zones</span></div>
+      <div class="hb hb-on">✅ INSTALLED</div>
     </div>
 
     <div class="squad-card card-blue">
-      <div class="card-number">04</div>
+      <div class="card-number">05</div>
       <div class="card-icon">🎙️</div>
       <div class="card-name c-blue">DJ WONDER</div>
-      <div class="card-role">Voice & Music — SA04</div>
+      <div class="card-role">SA05 — Voice & Music</div>
       <ul class="card-duties">
-        <li>Bilingual Laura voiceover via ElevenLabs TTS</li>
-        <li>Background music via ElevenLabs Music</li>
-        <li>Voice 100% / Music 30% mix</li>
-        <li>Retry on rate limits (3x max)</li>
+        <li>Laura voiceover — ElevenLabs multilingual v2</li>
+        <li>Background music via ElevenLabs Music API</li>
+        <li>Credit-conscious — checks before generating</li>
+        <li>3 retries max — never burns credits blindly</li>
+        <li>Reports to Joe Lopez</li>
       </ul>
       <div class="card-tools"><span class="tool">ElevenLabs TTS</span><span class="tool">ElevenLabs Music</span><span class="tool">ffmpeg</span></div>
-      <div class="hb hb-off">◉ ON-DEMAND</div>
+      <div class="hb hb-on">✅ INSTALLED</div>
     </div>
 
     <div class="squad-card card-green">
-      <div class="card-number">05</div>
+      <div class="card-number">06</div>
       <div class="card-icon">🎬</div>
       <div class="card-name c-green">LA SUEGRA</div>
-      <div class="card-role">SA05 — Video Builder</div>
+      <div class="card-role">SA06 — Final Assembly</div>
       <ul class="card-duties">
-        <li>ffmpeg concat filter method only</li>
-        <li>1080x1920 vertical format</li>
-        <li>Mecha watermark on final frame</li>
-        <li>Quality check before backup</li>
-        <li>Drive backup + Epi preview</li>
+        <li>ffmpeg concat FILTER — never demuxer</li>
+        <li>1080×1920 vertical, music at 15%</li>
+        <li>4-point verification before shipping</li>
+        <li>Mecha watermark on final video</li>
+        <li>Reports to Joe Lopez</li>
       </ul>
-      <div class="card-tools"><span class="tool">ffmpeg</span><span class="tool">gws-drive</span><span class="tool">bash</span></div>
-      <div class="hb hb-off">◉ ON-DEMAND</div>
+      <div class="card-tools"><span class="tool">ffmpeg</span><span class="tool">Concat Filter</span><span class="tool">Watermark</span></div>
+      <div class="hb hb-on">✅ INSTALLED</div>
     </div>
 
     <div class="squad-card card-purple">
-      <div class="card-number">06</div>
+      <div class="card-number">07</div>
       <div class="card-icon">🏷️</div>
       <div class="card-name c-purple">METICHE</div>
-      <div class="card-role">SEO & Community — SA06</div>
+      <div class="card-role">SA07 — SEO & Hashtags</div>
       <ul class="card-duties">
-        <li>3-3-3: broad + niche + hyperlocal tags</li>
+        <li>3-3-3: broad + niche + hyperlocal</li>
         <li>San Luis RC / AZ hyperlocal default</li>
         <li>Bilingual captions per platform</li>
-        <li>Trending research per platform</li>
-        <li>Rotates sets to avoid spam flags</li>
+        <li>Trending research + rotation</li>
       </ul>
       <div class="card-tools"><span class="tool">LLM</span><span class="tool">browser</span><span class="tool">gws-drive</span></div>
-      <div class="hb hb-off">◉ ON-DEMAND</div>
+      <div class="hb hb-off">◉ NEXT</div>
     </div>
 
     <div class="squad-card card-red">
-      <div class="card-number">07</div>
+      <div class="card-number">08</div>
       <div class="card-icon">🚀</div>
       <div class="card-name c-red">LA GRECIA</div>
-      <div class="card-role">SA07 — Multi-Platform Publisher</div>
+      <div class="card-role">SA08 — Publisher</div>
       <ul class="card-duties">
-        <li>TikTok, IG, FB, Snapchat, YouTube</li>
+        <li>6 platforms: TikTok, IG, FB, Snap, YT, X</li>
         <li>Saved browser sessions — no re-login</li>
-        <li>Uploads video + caption + hashtags</li>
         <li>Logs post URLs to Drive</li>
-        <li>Reports success/failure to Joe Lopez</li>
+        <li>Reports success/failure to Joe</li>
       </ul>
-      <div class="card-tools"><span class="tool">browser</span><span class="tool">gws-drive</span><span class="tool">bash</span></div>
-      <div class="hb hb-off">◉ ON-DEMAND</div>
-    </div>
-
-    <div class="squad-card card-orange">
-      <div class="card-number">08</div>
-      <div class="card-icon">🔁</div>
-      <div class="card-name c-orange">REPOST</div>
-      <div class="card-role">Community Amplifier — SA08</div>
-      <ul class="card-duties">
-        <li>Day 3, 7, 14 repost schedule</li>
-        <li>Local Facebook groups + community pages</li>
-        <li>San Luis RC + San Luis AZ targeting</li>
-        <li>Rotation logic to avoid spam</li>
-      </ul>
-      <div class="card-tools"><span class="tool">browser</span><span class="tool">cron</span><span class="tool">gws-drive</span></div>
-      <div class="hb hb-on">♥ CRON D3/7/14</div>
+      <div class="card-tools"><span class="tool">browser</span><span class="tool">gws-drive</span><span class="tool">6 Platforms</span></div>
+      <div class="hb hb-off">◉ NEXT</div>
     </div>
 
     <div class="squad-card card-blue">
       <div class="card-number">09</div>
       <div class="card-icon">📡</div>
       <div class="card-name c-blue">MONITOR</div>
-      <div class="card-role">Analytics Watchdog — SA09</div>
+      <div class="card-role">SA09 — Analytics</div>
       <ul class="card-duties">
         <li>Daily: views, likes, shares, reach</li>
-        <li>Flags top and bottom performers</li>
+        <li>Top/bottom performers flagged</li>
         <li>Comment monitoring + reply alerts</li>
-        <li>Competitor content tracking</li>
-        <li>All data stored to Drive analytics</li>
+        <li>Competitor tracking</li>
       </ul>
       <div class="card-tools"><span class="tool">browser</span><span class="tool">cron</span><span class="tool">gws-drive</span></div>
-      <div class="hb hb-on">♥ DAILY CRON</div>
+      <div class="hb hb-off">◉ FUTURE</div>
     </div>
 
     <div class="squad-card card-gold">
       <div class="card-number">10</div>
       <div class="card-icon">📊</div>
       <div class="card-name c-gold">REPORT</div>
-      <div class="card-role">Intelligence & Insights — SA10</div>
+      <div class="card-role">SA10 — Insights</div>
       <ul class="card-duties">
-        <li>Weekly performance report per client</li>
-        <li>Pushes data to Mac Mini dashboard</li>
-        <li>Emails client summary via Gmail</li>
-        <li>Next video topic recommendation</li>
-        <li>Renewal alerts + upsell flags</li>
+        <li>Weekly performance per client</li>
+        <li>Mac Mini dashboard</li>
+        <li>Client email via Gmail</li>
+        <li>Next video recommendation</li>
       </ul>
       <div class="card-tools"><span class="tool">gws-gmail</span><span class="tool">gws-drive</span><span class="tool">dashboard</span><span class="tool">cron</span></div>
-      <div class="hb hb-on">♥ WEEKLY CRON</div>
+      <div class="hb hb-off">◉ FUTURE</div>
     </div>
 
     <div class="squad-card card-green">
       <div class="card-number">11</div>
       <div class="card-icon">💳</div>
       <div class="card-name c-green">BILLING</div>
-      <div class="card-role">Stripe Payment Manager — SA11</div>
+      <div class="card-role">SA11 — Payments</div>
       <ul class="card-duties">
         <li>$100/mo core subscriptions</li>
         <li>$49 Go Halfers first month</li>
         <li>$2/mo nonprofits + churches</li>
-        <li>Failed payment retries</li>
-        <li>Cancellations + renewal confirmations</li>
+        <li>Failed payment retries + renewals</li>
       </ul>
       <div class="card-tools"><span class="tool">Stripe API</span><span class="tool">gws-gmail</span><span class="tool">bash</span></div>
-      <div class="hb hb-on">♥ ALWAYS ON</div>
+      <div class="hb hb-off">◉ FUTURE</div>
     </div>
 
   </div>
@@ -712,50 +730,53 @@
 
 <!-- BUILD PHASES -->
 <div class="section">
-  <div class="section-label">Build Order — Phase by Phase</div>
+  <div class="section-label">Build Status — What's Live</div>
   <div class="phases">
     <div class="phase">
-      <div class="phase-num c-gold">01</div>
-      <div class="phase-title">This Week</div>
+      <div class="phase-num c-green">✅</div>
+      <div class="phase-title">Completed Today</div>
       <ul class="phase-items">
-        <li>SA02 Script installed + tested</li>
-        <li>SA03 Media Agent</li>
-        <li>SA04 Audio Agent</li>
-        <li>SA05 Assembly Agent</li>
-        <li>Sign into all platforms</li>
-        <li>Test full video pipeline</li>
+        <li>Epi Blueprint (SOUL.md + MEMORY.md)</li>
+        <li>Self-Healing Engine installed</li>
+        <li>SA00 Joe Lopez + KPIs</li>
+        <li>SA02 David + MrBeast DNA</li>
+        <li>SA03 Junior (6 vertical images)</li>
+        <li>SA03B Senior (video editor)</li>
+        <li>SA04 Ramiro (platform prep)</li>
+        <li>SA05 DJ Wonder (voice + music)</li>
+        <li>SA06 La Suegra (assembly)</li>
+        <li>Full SMVC pipeline tested ✅</li>
       </ul>
     </div>
     <div class="phase">
       <div class="phase-num c-cyan">02</div>
-      <div class="phase-title">Next Week</div>
+      <div class="phase-title">Next Up</div>
       <ul class="phase-items">
-        <li>Joe Lopez SA00 built</li>
-        <li>Google Form + SA01 Intake</li>
-        <li>SA06 Hashtag Agent</li>
-        <li>SA07 Post Agent</li>
-        <li>First live client test</li>
-        <li>Stripe billing setup</li>
+        <li>Upgrade ElevenLabs credits</li>
+        <li>SA07 Metiche (SEO)</li>
+        <li>SA08 La Grecia (publisher)</li>
+        <li>Sign into all 6 platforms</li>
+        <li>First live client post</li>
       </ul>
     </div>
     <div class="phase">
-      <div class="phase-num c-green">03</div>
+      <div class="phase-num c-purple">03</div>
       <div class="phase-title">Month 1</div>
       <ul class="phase-items">
-        <li>SA08 Repost + cron</li>
+        <li>SA01 Gopher (intake automation)</li>
         <li>SA09 Monitor + daily cron</li>
         <li>SA10 Report + weekly cron</li>
         <li>Mac Mini dashboard</li>
-        <li>Client email reports</li>
+        <li>Real footage pipeline live</li>
       </ul>
     </div>
     <div class="phase">
-      <div class="phase-num c-purple">04</div>
+      <div class="phase-num c-gold">04</div>
       <div class="phase-title">Month 2</div>
       <ul class="phase-items">
-        <li>Real footage pipeline</li>
-        <li>SA11 Billing full auto</li>
-        <li>Community targeting</li>
+        <li>SA11 Billing (Stripe)</li>
+        <li>Mecha website/app launch</li>
+        <li>Client self-upload portal</li>
         <li>First 10 paying clients</li>
         <li>San Luis thrives 🌆</li>
       </ul>
@@ -766,8 +787,8 @@
 <!-- FOOTER -->
 <div class="footer">
   <div class="footer-logo">MECHA</div>
-  <div>DEATH SQUAD v4.0 — THE MACHINE — SAN LUIS RIO COLORADO, SONORA — 2026</div>
-  <div style="margin-top:8px; color: rgba(255,215,0,0.4)">👑 CLAUDE — 🦞 EPI — ⚙️ JOE LOPEZ — ⚡ GOPHER · DAVID · JUNIOR · DJ WONDER · LA SUEGRA · METICHE · LA GRECIA</div>
+  <div>DEATH SQUAD v5.0 — SMVC — THE MACHINE — SAN LUIS RIO COLORADO, SONORA — 2026</div>
+  <div style="margin-top:8px; color: rgba(255,215,0,0.4)">👑 CLAUDE — 🦞 EPI — ⚙️ JOE LOPEZ — ⚡ DAVID · JUNIOR · SENIOR · RAMIRO · DJ WONDER · LA SUEGRA · METICHE · LA GRECIA · MONITOR · REPORT · BILLING</div>
 </div>
 
 </body>

@@ -3,657 +3,815 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mecha Death Squad — HQ v6.0</title>
+<title>Mecha — HQ v7.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
-  :root {
-    --bg: #050507; --surface: #0a0a10; --card: #0f0f18; --border: #1a1a2a;
-    --accent: #ff3333; --gold: #ffd700; --cyan: #00e5ff; --green: #00ff88;
-    --purple: #b44fff; --orange: #ff9500; --blue: #4488ff; --pink: #ff6b9d;
-    --text: #e8e8f0; --muted: #55556a; --dim: #333350;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif;
-    min-height: 100vh; overflow-x: hidden;
-  }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #1a1a1a;
+  --red: #e63232;
+  --red-glow: rgba(230, 50, 50, 0.15);
+  --white: #f0f0f0;
+  --gray: #888888;
+  --gray-dim: #444444;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
 
-  /* HERO */
-  .hero { text-align: center; padding: 80px 20px 40px; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--green), transparent); }
-  .hero::after { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-    width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,51,51,0.08) 0%, transparent 70%);
-    pointer-events: none; }
-  .badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
-    letter-spacing: 4px; color: var(--gold); border: 1px solid rgba(255,215,0,0.3);
-    padding: 6px 16px; margin-bottom: 24px; background: rgba(255,215,0,0.04); }
-  .hero-tagline { font-size: 15px; color: var(--muted); letter-spacing: 1px; margin-bottom: 12px; font-weight: 300; }
-  .hero-product { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 3px;
-    color: var(--green); border: 1px solid rgba(0,255,136,0.25); display: inline-block;
-    padding: 8px 20px; background: rgba(0,255,136,0.04); margin-bottom: 12px; }
-  .hero-arch { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px;
-    color: var(--cyan); margin-bottom: 40px; }
-  .hero-services { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 40px; }
-  .hero-svc { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px;
-    padding: 5px 14px; border: 1px solid var(--border); color: var(--muted); background: var(--card); }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 100px 0; }
+.red { color: var(--red); }
+.dim { color: var(--gray); }
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid var(--gray-dim);
+  border-radius: 20px;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.tag.live { border-color: #22c55e; color: #22c55e; }
+.tag.next { border-color: var(--red); color: var(--red); animation: pulse 2s infinite; }
+.tag.planned { border-color: var(--gray-dim); color: var(--gray-dim); }
 
-  /* SECTIONS */
-  .section { max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; }
-  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 6px;
-    color: var(--muted); text-transform: uppercase; margin-bottom: 32px;
-    display: flex; align-items: center; gap: 16px; }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.anim { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+.d1 { animation-delay: 0.1s; } .d2 { animation-delay: 0.2s; } .d3 { animation-delay: 0.3s; }
+.d4 { animation-delay: 0.4s; } .d5 { animation-delay: 0.5s; } .d6 { animation-delay: 0.6s; }
 
-  /* COMMAND CHAIN */
-  .chain { display: flex; align-items: center; justify-content: center; gap: 0;
-    flex-wrap: wrap; margin: 0 auto 80px; max-width: 1200px; padding: 0 20px; }
-  .chain-node { display: flex; flex-direction: column; align-items: center; padding: 20px 28px;
-    border: 1px solid; position: relative; min-width: 140px; }
-  .chain-icon { font-size: 28px; margin-bottom: 8px; }
-  .chain-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; }
-  .chain-role { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: var(--muted); margin-top: 4px; letter-spacing: 1px; }
-  .chain-arrow { font-size: 20px; color: var(--dim); padding: 0 6px; }
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 200px;
+  background: linear-gradient(transparent, var(--bg));
+  pointer-events: none;
+}
+.hero-glow {
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-version {
+  position: absolute;
+  top: 32px; right: 32px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--gray-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+.hero h1 .line { display: block; }
+.hero h1 .line.white {
+  background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero h1 .line.accent {
+  background: linear-gradient(135deg, var(--red) 0%, #ff6b6b 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--gray);
+  max-width: 560px;
+  margin-bottom: 40px;
+  line-height: 1.7;
+}
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 20px;
+}
+.hero-stat h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--red);
+}
+.hero-stat p {
+  font-size: 0.75rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
 
-  /* HOW IT WORKS */
-  .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-  .how-step { background: var(--card); border: 1px solid var(--border); padding: 28px; position: relative; }
-  .how-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; line-height: 1;
-    position: absolute; top: 16px; right: 20px; opacity: 0.05; }
-  .how-icon { font-size: 28px; margin-bottom: 12px; }
-  .how-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 8px; }
-  .how-desc { font-size: 13px; color: #8080a0; line-height: 1.6; }
+/* ── SECTION HEADERS ── */
+.section-head { margin-bottom: 48px; }
+.section-head h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.section-head p { color: var(--gray); font-size: 1rem; max-width: 500px; }
+.section-divider {
+  width: 60px; height: 3px;
+  background: var(--red);
+  margin-bottom: 16px;
+}
 
-  /* PIPELINE */
-  .pipeline { display: flex; flex-direction: column; gap: 2px; }
-  .pipe-row { display: grid; grid-template-columns: 50px 1fr; gap: 2px; min-height: 80px; }
-  .pipe-num { background: var(--card); border: 1px solid var(--border); display: flex;
-    align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--dim); }
-  .pipe-content { background: var(--surface); border: 1px solid var(--border); padding: 16px 24px;
-    display: flex; align-items: center; gap: 20px; }
-  .pipe-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; min-width: 140px; }
-  .pipe-file { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim);
-    background: rgba(255,255,255,0.03); padding: 3px 8px; border: 1px solid var(--border); min-width: 130px; }
-  .pipe-desc { font-size: 13px; color: #8080a0; line-height: 1.5; flex: 1; }
-  .pipe-status { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 3px 8px;
-    border-radius: 1px; letter-spacing: 1px; white-space: nowrap; }
-  .s-live { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); }
-  .s-build { background: rgba(255,149,0,0.08); border: 1px solid rgba(255,149,0,0.2); color: var(--orange); }
-  .s-plan { background: rgba(85,85,106,0.2); border: 1px solid var(--border); color: var(--muted); }
+/* ── HOW IT WORKS ── */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.step-card {
+  background: var(--bg-card);
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  padding: 32px 24px;
+  position: relative;
+  transition: all 0.4s;
+}
+.step-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--red);
+  transform: translateY(-4px);
+}
+.step-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3rem;
+  color: #1a1a1a;
+  position: absolute;
+  top: 12px; right: 16px;
+}
+.step-card:hover .step-num { color: var(--red-glow); }
+.step-icon { font-size: 1.8rem; margin-bottom: 16px; }
+.step-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.step-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
 
-  /* SQUAD GRID */
-  .squad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2px; }
-  .squad-card { background: var(--card); border: 1px solid var(--border); padding: 24px;
-    position: relative; overflow: hidden; transition: all 0.3s; }
-  .squad-card:hover { border-color: rgba(255,255,255,0.1); transform: translateY(-2px);
-    box-shadow: 0 16px 32px rgba(0,0,0,0.4); }
-  .squad-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
-  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-  .card-icon { font-size: 24px; }
-  .card-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; }
-  .card-file { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); }
-  .card-role { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px;
-    color: var(--muted); text-transform: uppercase; margin-bottom: 14px; }
-  .card-desc { font-size: 12px; color: #7070a0; line-height: 1.6; margin-bottom: 14px; }
-  .card-tools { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 12px; border-top: 1px solid var(--border); }
-  .tool { font-family: 'JetBrains Mono', monospace; font-size: 8px; padding: 2px 7px;
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-    color: var(--muted); letter-spacing: 1px; }
+/* ── PIPELINE ── */
+.pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.pipe-card {
+  background: var(--bg-card);
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  padding: 24px;
+  transition: all 0.3s;
+}
+.pipe-card:hover { border-color: #333; transform: translateY(-2px); }
+.pipe-card.live { border-left: 3px solid #22c55e; }
+.pipe-card.next { border-left: 3px solid var(--red); }
+.pipe-card.planned { border-left: 3px solid var(--gray-dim); }
+.pipe-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.pipe-card h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.pipe-card p { font-size: 0.8rem; color: var(--gray); }
+.pipe-file { font-size: 0.7rem; color: var(--gray-dim); margin-top: 8px; font-family: monospace; }
 
-  /* SERVICES */
-  .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2px; }
-  .svc-card { background: var(--card); border: 1px solid var(--border); padding: 28px; text-align: center; }
-  .svc-icon { font-size: 36px; margin-bottom: 12px; }
-  .svc-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; margin-bottom: 8px; }
-  .svc-desc { font-size: 12px; color: #7070a0; line-height: 1.5; }
+/* ── VIDEO GALLERY ── */
+.gallery-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.gallery-tab {
+  padding: 8px 20px;
+  border: 1px solid var(--gray-dim);
+  border-radius: 24px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.3s;
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.gallery-tab:hover, .gallery-tab.active {
+  border-color: var(--red);
+  color: var(--white);
+  background: var(--red-glow);
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+.video-card {
+  background: var(--bg-card);
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.video-card:hover { border-color: #333; transform: translateY(-3px); }
+.video-embed {
+  width: 100%;
+  aspect-ratio: 9/16;
+  max-height: 420px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-embed iframe { width: 100%; height: 100%; border: none; }
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--gray-dim);
+  font-size: 0.8rem;
+}
+.play-icon {
+  width: 56px; height: 56px;
+  border: 2px solid var(--gray-dim);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  animation: float 3s ease-in-out infinite;
+}
+.video-info { padding: 16px 20px; }
+.video-info h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.video-info p { font-size: 0.75rem; color: var(--gray); }
+.video-meta { display: flex; gap: 12px; margin-top: 8px; }
+.video-meta span {
+  font-size: 0.65rem;
+  color: var(--gray-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border: 1px solid #222;
+  border-radius: 4px;
+}
 
-  /* BILLING */
-  .billing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-  .billing-card { background: var(--card); border: 1px solid var(--border); padding: 28px; text-align: center; }
-  .billing-price { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 2px; }
-  .billing-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
-    color: var(--muted); margin-bottom: 8px; text-transform: uppercase; }
-  .billing-desc { font-size: 12px; color: #7070a0; margin-top: 8px; }
+/* ── VERSION TIMELINE ── */
+.timeline { position: relative; margin-top: 48px; padding-left: 40px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 12px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(var(--red), var(--gray-dim), transparent);
+}
+.tl-item { position: relative; margin-bottom: 48px; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -34px; top: 6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 3px solid var(--bg);
+}
+.tl-item.current::before { box-shadow: 0 0 12px var(--red); }
+.tl-item.past::before { background: var(--gray-dim); }
+.tl-item h4 { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+.tl-date {
+  font-size: 0.7rem;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.tl-item.past .tl-date { color: var(--gray-dim); }
+.tl-item p { font-size: 0.85rem; color: var(--gray); max-width: 500px; }
 
-  /* PLATFORMS */
-  .plat-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 80px; }
-  .plat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px;
-    padding: 10px 20px; border: 1px solid var(--border); color: var(--muted); background: var(--card); }
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.price-card {
+  background: var(--bg-card);
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.price-card:hover { border-color: #333; transform: translateY(-3px); }
+.price-card.featured { border-color: var(--red); background: linear-gradient(135deg, #111 0%, #1a0a0a 100%); }
+.price-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+.price-amount {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.8rem;
+  margin-bottom: 4px;
+}
+.price-card.featured .price-amount { color: var(--red); }
+.price-period { font-size: 0.8rem; color: var(--gray); margin-bottom: 20px; }
+.price-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.8; }
 
-  /* PHASES */
-  .phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-  .phase { background: var(--card); border: 1px solid var(--border); padding: 24px; }
-  .phase-num { font-family: 'Bebas Neue', sans-serif; font-size: 48px; line-height: 1; margin-bottom: 4px; }
-  .phase-title { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px;
-    color: var(--muted); margin-bottom: 14px; text-transform: uppercase; }
-  .phase-items { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-  .phase-items li { font-size: 12px; color: #7070a0; padding-left: 14px; position: relative; line-height: 1.4; }
-  .phase-items li::before { content: '▸'; position: absolute; left: 0; opacity: 0.4; }
+/* ── PLATFORMS ── */
+.platforms-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+.platform-badge {
+  padding: 10px 24px;
+  border: 1px solid #222;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: all 0.3s;
+}
+.platform-badge:hover { border-color: var(--red); color: var(--white); }
 
-  /* FOOTER */
-  .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: 3px; }
-  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 8px;
-    background: linear-gradient(135deg, #ff3333, #ffd700); -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+/* ── FOOTER ── */
+.footer {
+  padding: 60px 0;
+  border-top: 1px solid #1a1a1a;
+  text-align: center;
+}
+.footer p { font-size: 0.75rem; color: var(--gray-dim); letter-spacing: 0.06em; }
+.footer .brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--red);
+  margin-bottom: 8px;
+}
 
-  /* COLORS */
-  .c-gold{color:var(--gold)} .c-cyan{color:var(--cyan)} .c-green{color:var(--green)}
-  .c-purple{color:var(--purple)} .c-orange{color:var(--orange)} .c-red{color:var(--accent)}
-  .c-blue{color:var(--blue)} .c-pink{color:var(--pink)}
-  .card-gold::before{background:var(--gold)} .card-cyan::before{background:var(--cyan)}
-  .card-green::before{background:var(--green)} .card-purple::before{background:var(--purple)}
-  .card-orange::before{background:var(--orange)} .card-red::before{background:var(--accent)}
-  .card-blue::before{background:var(--blue)} .card-pink::before{background:var(--pink)}
-
-  @media (max-width: 768px) {
-    .how-grid { grid-template-columns: 1fr 1fr; }
-    .phases { grid-template-columns: repeat(2, 1fr); }
-    .billing-grid { grid-template-columns: 1fr; }
-    .chain { flex-direction: column; } .chain-arrow { transform: rotate(90deg); }
-    .pipe-content { flex-direction: column; align-items: flex-start; gap: 8px; }
-  }
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .pipeline-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: column; gap: 24px; }
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .steps-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="badge">👑 BUILT BY CLAUDE + MANNY — POWERED BY MAC MINI</div>
-  <div style="max-width:900px;margin:0 auto 20px;padding:0 20px;"><img src="MDS_logo1.webp" alt="Mecha Death Squad" style="width:100%;height:auto;display:block;border:1px solid rgba(255,51,51,0.2);box-shadow:0 0 80px rgba(255,51,51,0.12);"></div>
-  <div class="hero-tagline">We point people to your business. Relentlessly. Across every platform.</div>
-  <div class="hero-product">SMVC — SOCIAL MEDIA VIDEO CREATOR</div>
-  <div class="hero-arch">PYTHON PIPELINE · MAC MINI · NO MIDDLEMAN · 6 PLATFORMS</div>
-  <div class="hero-services">
-    <span class="hero-svc">🎬 VIDEO COMMERCIALS</span>
-    <span class="hero-svc">📝 ARTICLES</span>
-    <span class="hero-svc">🎟️ COUPONS</span>
-    <span class="hero-svc">🎰 RAFFLES</span>
-    <span class="hero-svc">📍 LEAD GENERATION</span>
-  </div>
-</div>
-
-<!-- COMMAND CHAIN -->
-<div class="chain">
-  <div class="chain-node" style="border-color:var(--gold);background:rgba(255,215,0,0.04);">
-    <div class="chain-icon">🧠</div>
-    <div class="chain-name c-gold">CLAUDE</div>
-    <div class="chain-role">Architect</div>
-  </div>
-  <div class="chain-arrow">→</div>
-  <div class="chain-node" style="border-color:var(--accent);background:rgba(255,51,51,0.04);">
-    <div class="chain-icon">👤</div>
-    <div class="chain-name c-red">MANNY</div>
-    <div class="chain-role">Commander</div>
-  </div>
-  <div class="chain-arrow">→</div>
-  <div class="chain-node" style="border-color:var(--green);background:rgba(0,255,136,0.04);">
-    <div class="chain-icon">🖥️</div>
-    <div class="chain-name c-green">MAC MINI</div>
-    <div class="chain-role">The Machine</div>
-  </div>
-  <div class="chain-arrow">→</div>
-  <div class="chain-node" style="border-color:var(--cyan);background:rgba(0,229,255,0.04);">
-    <div class="chain-icon">⚡</div>
-    <div class="chain-name c-cyan">SMVC PIPELINE</div>
-    <div class="chain-role">Python Modules</div>
-  </div>
-  <div class="chain-arrow">→</div>
-  <div class="chain-node" style="border-color:var(--orange);background:rgba(255,149,0,0.04);">
-    <div class="chain-icon">🌆</div>
-    <div class="chain-name c-orange">SAN LUIS</div>
-    <div class="chain-role">Thrives</div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
-<div class="section">
-  <div class="section-label">How Mecha Works — Customer Experience</div>
-  <div class="how-grid">
-    <div class="how-step">
-      <div class="how-num">01</div>
-      <div class="how-icon">📱</div>
-      <div class="how-title c-cyan">UPLOAD</div>
-      <div class="how-desc">Log into Mecha website. Upload 1-4 short video clips (5 seconds each) and 4-6 photos of your business. Fill out the questionnaire.</div>
-    </div>
-    <div class="how-step">
-      <div class="how-num">02</div>
-      <div class="how-icon">⚡</div>
-      <div class="how-title c-green">MACHINE BUILDS</div>
-      <div class="how-desc">The Mac Mini pipeline takes your content and creates professional 30-second commercials, articles, coupons, and promotional materials automatically.</div>
-    </div>
-    <div class="how-step">
-      <div class="how-num">03</div>
-      <div class="how-icon">🚀</div>
-      <div class="how-title c-orange">LAUNCH</div>
-      <div class="how-desc">Your commercial goes live across TikTok, Instagram, Facebook, Snapchat, YouTube, and X simultaneously. Articles and promotions follow.</div>
-    </div>
-    <div class="how-step">
-      <div class="how-num">04</div>
-      <div class="how-icon">📈</div>
-      <div class="how-title c-gold">GROW</div>
-      <div class="how-desc">People find your business. Foot traffic increases. Phone rings. Mecha keeps creating and posting. Your business thrives.</div>
-    </div>
-  </div>
-</div>
-
-<!-- SERVICES -->
-<div class="section">
-  <div class="section-label">What Mecha Creates For You</div>
-  <div class="svc-grid">
-    <div class="svc-card">
-      <div class="svc-icon">🎬</div>
-      <div class="svc-title c-cyan">Video Commercials</div>
-      <div class="svc-desc">30-second professional commercials from your phone footage. MrBeast viral framework. Posted across 6 platforms.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">📝</div>
-      <div class="svc-title c-green">Articles & Blog Posts</div>
-      <div class="svc-desc">SEO-optimized articles about your business. Bilingual Spanish/English. Drive organic search traffic to your door.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">🎟️</div>
-      <div class="svc-title c-orange">Digital Coupons</div>
-      <div class="svc-desc">Promotions and deals that spread across social media. Track redemptions. Drive urgency and foot traffic.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">🎰</div>
-      <div class="svc-title c-purple">Raffles & Giveaways</div>
-      <div class="svc-desc">Community engagement through raffles and contests. Build your audience. Turn followers into customers.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">📍</div>
-      <div class="svc-title c-pink">Lead Generation</div>
-      <div class="svc-desc">We point people to your business. Every post, every video, every article drives traffic directly to you.</div>
-    </div>
-  </div>
-</div>
-
-<!-- THE PIPELINE -->
-<div class="section">
-  <div class="section-label">The SMVC Pipeline — python3 smvc.py</div>
-  <div class="pipeline">
-    <div class="pipe-row">
-      <div class="pipe-num c-orange">00</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-orange">JOE LOPEZ</div>
-        <div class="pipe-file">joe.py</div>
-        <div class="pipe-desc">Operations Manager. Runs pre-flight checks, dispatches each module in order, tracks KPIs, handles errors. The floor boss.</div>
-        <div class="pipe-status s-build">BUILDING</div>
+<!-- ════════════ HERO ════════════ -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-version">HQ v7.0</div>
+  <div class="container">
+    <h1>
+      <span class="line white anim d1">We point</span>
+      <span class="line white anim d2">people to</span>
+      <span class="line accent anim d3">your business.</span>
+    </h1>
+    <p class="hero-sub anim d4">AI-powered video commercials for local businesses. Built on a Mac Mini in San Luis. From intake to published — no middleman.</p>
+    <div class="hero-stats anim d5">
+      <div class="hero-stat">
+        <h3>~100s</h3>
+        <p>Form to finished video</p>
       </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-cyan">01</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-cyan">GOPHER</div>
-        <div class="pipe-file">gopher.py</div>
-        <div class="pipe-desc">Client intake. Processes uploads from Mecha website — videos, photos, questionnaire data. Creates client package.</div>
-        <div class="pipe-status s-plan">PLANNED</div>
+      <div class="hero-stat">
+        <h3>6</h3>
+        <p>Platforms simultaneously</p>
       </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-orange">02</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-orange">DAVID</div>
-        <div class="pipe-file">david.py</div>
-        <div class="pipe-desc">Scriptwriter. MrBeast viral framework. HOOK / SETUP / REVEAL×3 / CTA. Sonoran Spanish. 30 seconds. Calls Gemini API.</div>
-        <div class="pipe-status s-build">BUILDING</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-purple">03</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-purple">JUNIOR</div>
-        <div class="pipe-file">junior.py</div>
-        <div class="pipe-desc">AI image generator. 6 vertical images via Gemini. Phone-first 9:16. Latino aesthetic. Verifies every output.</div>
-        <div class="pipe-status s-build">BUILDING</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-pink">03B</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-pink">SENIOR</div>
-        <div class="pipe-file">senior.py</div>
-        <div class="pipe-desc">Video editor. Trims client iPhone footage to script timing. Stabilizes, scales to 9:16. Ken Burns on photos.</div>
-        <div class="pipe-status s-build">BUILDING</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-cyan">04</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-cyan">RAMIRO</div>
-        <div class="pipe-file">ramiro.py</div>
-        <div class="pipe-desc">Platform prep. Safe zones, Mecha watermark, CTA text overlay. Process once, format for all 6 platforms.</div>
-        <div class="pipe-status s-build">BUILDING</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-blue">05</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-blue">DJ WONDER</div>
-        <div class="pipe-file">dj_wonder.py</div>
-        <div class="pipe-desc">Voice & music. ElevenLabs Laura voiceover + background music. Credit-conscious. Silent fallback if depleted.</div>
-        <div class="pipe-status s-build">BUILDING</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-green">06</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-green">LA SUEGRA</div>
-        <div class="pipe-file">la_suegra.py</div>
-        <div class="pipe-desc">Final assembly. ffmpeg concat filter. Music at 15%. Watermark. 4-point verification. Nothing ships without her approval.</div>
-        <div class="pipe-status s-build">BUILDING</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-purple">07</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-purple">METICHE</div>
-        <div class="pipe-file">metiche.py</div>
-        <div class="pipe-desc">SEO & hashtags. 3-3-3 formula. Bilingual captions per platform. Trending tags. Rotation to avoid spam.</div>
-        <div class="pipe-status s-plan">PLANNED</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-red">08</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-red">LA GRECIA</div>
-        <div class="pipe-file">la_grecia.py</div>
-        <div class="pipe-desc">Publisher. Posts to all 6 platforms simultaneously. Logs URLs. Reports success/failure.</div>
-        <div class="pipe-status s-plan">PLANNED</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-blue">09</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-blue">MONITOR</div>
-        <div class="pipe-file">monitor.py</div>
-        <div class="pipe-desc">Analytics. Daily views, likes, shares, reach. Flags top/bottom performers. Competitor tracking.</div>
-        <div class="pipe-status s-plan">PLANNED</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-gold">10</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-gold">REPORT</div>
-        <div class="pipe-file">report.py</div>
-        <div class="pipe-desc">Weekly insights per client. Dashboard. Client email. Next video recommendation. Renewal alerts.</div>
-        <div class="pipe-status s-plan">PLANNED</div>
-      </div>
-    </div>
-    <div class="pipe-row">
-      <div class="pipe-num c-green">11</div>
-      <div class="pipe-content">
-        <div class="pipe-name c-green">BILLING</div>
-        <div class="pipe-file">billing.py</div>
-        <div class="pipe-desc">Stripe subscriptions. $100/mo core. $49 Go Halfers. $2/mo nonprofits. Auto-retry. Renewal handling.</div>
-        <div class="pipe-status s-plan">PLANNED</div>
+      <div class="hero-stat">
+        <h3>15+</h3>
+        <p>Test commercials produced</p>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- PLATFORMS -->
-<div class="section">
-  <div class="section-label">Platforms — Ship Everywhere</div>
-  <div class="plat-row">
-    <span class="plat">TIKTOK</span>
-    <span class="plat">INSTAGRAM REELS</span>
-    <span class="plat">FACEBOOK REELS</span>
-    <span class="plat">SNAPCHAT</span>
-    <span class="plat">YOUTUBE SHORTS</span>
-    <span class="plat">X.COM</span>
-  </div>
-</div>
-
-<!-- PRICING -->
-<div class="section">
-  <div class="section-label">Mecha Pricing — One Client Per Category Per Market</div>
-  <div class="billing-grid">
-    <div class="billing-card">
-      <div class="billing-name">Core Tier</div>
-      <div class="billing-price c-green">$100<span style="font-size:20px">/mo</span></div>
-      <div class="billing-desc">Full service. Video commercials + articles + promotions. One client per category. Exclusivity is your moat.</div>
+<!-- ════════════ HOW IT WORKS ════════════ -->
+<section class="section" id="how">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <h2>How Mecha Works</h2>
+      <p>Four steps. Your business on every screen in town.</p>
     </div>
-    <div class="billing-card">
-      <div class="billing-name">Go Halfers — First Month</div>
-      <div class="billing-price c-cyan">$49</div>
-      <div class="billing-desc">Half price to start. Auto-converts to $100/mo. Get them in the door.</div>
-    </div>
-    <div class="billing-card">
-      <div class="billing-name">Can't Afford It</div>
-      <div class="billing-price c-gold">$2<span style="font-size:20px">/mo</span></div>
-      <div class="billing-desc">Nonprofits and churches. Community first. Always.</div>
-    </div>
-  </div>
-</div>
-
-<!-- TECH STACK -->
-<div class="section">
-  <div class="section-label">The Tech Stack — No Middleman</div>
-  <div class="how-grid">
-    <div class="how-step">
-      <div class="how-icon">🖥️</div>
-      <div class="how-title c-green">Mac Mini</div>
-      <div class="how-desc">The Machine. Runs 24/7 in San Luis Rio Colorado. Python pipeline. ffmpeg. All processing happens here.</div>
-    </div>
-    <div class="how-step">
-      <div class="how-icon">🧠</div>
-      <div class="how-title c-gold">Claude</div>
-      <div class="how-desc">The Architect. Designs systems, writes code, debugs problems. Manny pastes the error, Claude fixes it. No middleman.</div>
-    </div>
-    <div class="how-step">
-      <div class="how-icon">🎨</div>
-      <div class="how-title c-purple">Gemini API</div>
-      <div class="how-desc">AI image generation. Script writing. Content creation. Powers David and Junior modules.</div>
-    </div>
-    <div class="how-step">
-      <div class="how-icon">🎙️</div>
-      <div class="how-title c-blue">ElevenLabs</div>
-      <div class="how-desc">Laura voice. Bilingual TTS. Background music. Powers DJ Wonder module.</div>
+    <div class="steps-grid">
+      <div class="step-card anim d1">
+        <div class="step-num">01</div>
+        <div class="step-icon">📱</div>
+        <h3>Upload</h3>
+        <p>Fill out the intake form. Business name, what you do, your story, photos, logo, music vibe. Takes 3 minutes.</p>
+      </div>
+      <div class="step-card anim d2">
+        <div class="step-num">02</div>
+        <div class="step-icon">⚡</div>
+        <h3>Machine Builds</h3>
+        <p>The pipeline writes your script, generates images, records voiceover, mixes music, and assembles a 30-second commercial. ~100 seconds.</p>
+      </div>
+      <div class="step-card anim d3">
+        <div class="step-num">03</div>
+        <div class="step-icon">🚀</div>
+        <h3>Launch</h3>
+        <p>Your commercial goes live across TikTok, Instagram Reels, Facebook Reels, Snapchat, YouTube Shorts, and X simultaneously.</p>
+      </div>
+      <div class="step-card anim d4">
+        <div class="step-num">04</div>
+        <div class="step-icon">📈</div>
+        <h3>Grow</h3>
+        <p>People find your business. Foot traffic increases. Phone rings. Mecha keeps creating and posting. Your business thrives.</p>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- CRITICAL PATH -->
-<div class="section">
-  <div class="section-label">Critical Path — 45-Day Test Target (April 27, 2026)</div>
-
-  <div style="background:var(--card);border:1px solid var(--border);padding:24px 28px;margin-bottom:20px;border-left:3px solid var(--accent);">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;">🎯 TEST GOAL — APRIL 27, 2026</div>
-    <div style="font-size:14px;color:var(--text);line-height:1.6;">One command → finished video with script, AI images, voiceover, background music, watermark, viewable MP4. No babysitting. No middleman. Just python3 smvc.py → done.</div>
+<!-- ════════════ PIPELINE ════════════ -->
+<section class="section" id="pipeline" style="background: #080808;">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <h2>The Pipeline</h2>
+      <p>Every agent has a job. Every job gets done.</p>
+    </div>
+    <div class="pipeline-grid">
+      <div class="pipe-card live">
+        <div class="pipe-header">
+          <h4>David</h4>
+          <span class="tag live">Live</span>
+        </div>
+        <p>Scriptwriter. MrBeast viral framework. 6-section scripts in Sonoran Spanish. Powered by Gemini.</p>
+        <div class="pipe-file">SA02 · david.py</div>
+      </div>
+      <div class="pipe-card live">
+        <div class="pipe-header">
+          <h4>Junior</h4>
+          <span class="tag live">Live</span>
+        </div>
+        <p>AI image generator. 6 vertical images per video. Phone-first 9:16. Latino border aesthetic.</p>
+        <div class="pipe-file">SA03 · junior.py</div>
+      </div>
+      <div class="pipe-card live">
+        <div class="pipe-header">
+          <h4>DJ Wonder</h4>
+          <span class="tag live">Live</span>
+        </div>
+        <p>Voice and music. Laura voiceover via ElevenLabs. Royalty-free music library by genre.</p>
+        <div class="pipe-file">SA05 · dj_wonder.py</div>
+      </div>
+      <div class="pipe-card live">
+        <div class="pipe-header">
+          <h4>La Suegra</h4>
+          <span class="tag live">Live</span>
+        </div>
+        <p>Final assembly. Branded intro/outro. Customer logo on every slide. Qiara font. 4-point verification.</p>
+        <div class="pipe-file">SA06 · la_suegra.py</div>
+      </div>
+      <div class="pipe-card next">
+        <div class="pipe-header">
+          <h4>La Grecia</h4>
+          <span class="tag next">Next Up</span>
+        </div>
+        <p>Publisher. Posts finished videos to all 6 platforms. Meta Graph API for Instagram and Facebook Reels.</p>
+        <div class="pipe-file">SA08 · la_grecia.py</div>
+      </div>
+      <div class="pipe-card planned">
+        <div class="pipe-header">
+          <h4>Metiche</h4>
+          <span class="tag planned">Planned</span>
+        </div>
+        <p>SEO and hashtags. Bilingual captions. Trending tags per platform. Rotation to avoid spam.</p>
+        <div class="pipe-file">SA07 · metiche.py</div>
+      </div>
+      <div class="pipe-card planned">
+        <div class="pipe-header">
+          <h4>Gopher</h4>
+          <span class="tag planned">Planned</span>
+        </div>
+        <p>Client intake automation. Pulls website and social data. Builds client package for David.</p>
+        <div class="pipe-file">SA01 · gopher.py</div>
+      </div>
+      <div class="pipe-card planned">
+        <div class="pipe-header">
+          <h4>Monitor</h4>
+          <span class="tag planned">Planned</span>
+        </div>
+        <p>Analytics. Daily views, likes, shares, reach. Flags top and bottom performers.</p>
+        <div class="pipe-file">SA09 · monitor.py</div>
+      </div>
+      <div class="pipe-card planned">
+        <div class="pipe-header">
+          <h4>Billing</h4>
+          <span class="tag planned">Planned</span>
+        </div>
+        <p>Stripe subscriptions. $100/mo core. $49 Go Halfers first month. $2/mo nonprofits.</p>
+        <div class="pipe-file">SA11 · billing.py</div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div style="display:flex;flex-direction:column;gap:2px;">
-
-    <!-- WEEK 1 -->
-    <div style="background:var(--surface);border:1px solid var(--border);padding:20px 24px;display:grid;grid-template-columns:100px 160px 1fr 100px;gap:16px;align-items:center;">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--green);">WK 1</div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">MAR 15-21</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--green);">FOUNDATION</div>
-      </div>
-      <div style="font-size:12px;color:#8080a0;line-height:1.6;">
-        Project structure on Mac Mini. joe.py orchestrator shell. david.py script generator (Gemini API). First test: python3 david.py → script output.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2);color:var(--green);text-align:center;">⭐ M1</div>
+<!-- ════════════ VIDEO GALLERY ════════════ -->
+<section class="section" id="gallery">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <h2>The Evolution</h2>
+      <p>Watch the machine get smarter. Every version is a step closer to perfection.</p>
     </div>
-
-    <!-- MILESTONE 1 -->
-    <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.15);padding:12px 24px;display:flex;align-items:center;gap:16px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);letter-spacing:2px;min-width:100px;">MILESTONE 1</div>
-      <div style="font-size:12px;color:var(--green);">david.py generates a complete 6-section SMVC script from client input — Mar 21</div>
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" onclick="filterGallery('all')">All</button>
+      <button class="gallery-tab" onclick="filterGallery('v1')">V1 — First Drafts</button>
+      <button class="gallery-tab" onclick="filterGallery('v2')">V2 — Branded</button>
+      <button class="gallery-tab" onclick="filterGallery('v3')">V3 — Current</button>
     </div>
+    <div class="gallery-grid" id="galleryGrid">
 
-    <!-- WEEK 2 -->
-    <div style="background:var(--surface);border:1px solid var(--border);padding:20px 24px;display:grid;grid-template-columns:100px 160px 1fr 100px;gap:16px;align-items:center;">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--cyan);">WK 2</div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">MAR 22-28</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--cyan);">IMAGES</div>
-      </div>
-      <div style="font-size:12px;color:#8080a0;line-height:1.6;">
-        junior.py image generator (Gemini API). 6 vertical images from script. Inline API key. Auto-verify each image. First test: script → 6 images.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;background:rgba(0,229,255,0.08);border:1px solid rgba(0,229,255,0.2);color:var(--cyan);text-align:center;">⭐ M2</div>
-    </div>
-
-    <!-- MILESTONE 2 -->
-    <div style="background:rgba(0,229,255,0.04);border:1px solid rgba(0,229,255,0.15);padding:12px 24px;display:flex;align-items:center;gap:16px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--cyan);letter-spacing:2px;min-width:100px;">MILESTONE 2</div>
-      <div style="font-size:12px;color:var(--cyan);">junior.py generates 6 verified vertical images from David's script — Mar 28</div>
-    </div>
-
-    <!-- WEEK 3 -->
-    <div style="background:var(--surface);border:1px solid var(--border);padding:20px 24px;display:grid;grid-template-columns:100px 160px 1fr 100px;gap:16px;align-items:center;">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--blue);">WK 3</div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">MAR 29 - APR 4</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--blue);">AUDIO</div>
-      </div>
-      <div style="font-size:12px;color:#8080a0;line-height:1.6;">
-        dj_wonder.py voice + music (ElevenLabs API). Laura voiceover per section. Background music. Silent fallback. Upgrade ElevenLabs to Creator plan.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;background:rgba(68,136,255,0.08);border:1px solid rgba(68,136,255,0.2);color:var(--blue);text-align:center;">⭐ M3</div>
-    </div>
-
-    <!-- MILESTONE 3 -->
-    <div style="background:rgba(68,136,255,0.04);border:1px solid rgba(68,136,255,0.15);padding:12px 24px;display:flex;align-items:center;gap:16px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--blue);letter-spacing:2px;min-width:100px;">MILESTONE 3</div>
-      <div style="font-size:12px;color:var(--blue);">dj_wonder.py generates 6 voiceovers + 1 background track from script — Apr 4</div>
-    </div>
-
-    <!-- WEEK 4 -->
-    <div style="background:var(--surface);border:1px solid var(--border);padding:20px 24px;display:grid;grid-template-columns:100px 160px 1fr 100px;gap:16px;align-items:center;">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);">WK 4</div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">APR 5-11</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--orange);">ASSEMBLY</div>
-      </div>
-      <div style="font-size:12px;color:#8080a0;line-height:1.6;">
-        la_suegra.py final assembly (ffmpeg). Concat filter. Music mixing at 15%. Mecha watermark. 4-point verification. ramiro.py platform prep + safe zones.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.2);color:var(--orange);text-align:center;">⭐ M4</div>
-    </div>
-
-    <!-- MILESTONE 4 -->
-    <div style="background:rgba(255,149,0,0.04);border:1px solid rgba(255,149,0,0.15);padding:12px 24px;display:flex;align-items:center;gap:16px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--orange);letter-spacing:2px;min-width:100px;">MILESTONE 4</div>
-      <div style="font-size:12px;color:var(--orange);">la_suegra.py assembles images + audio into finished video with watermark — Apr 11</div>
-    </div>
-
-    <!-- WEEK 5 -->
-    <div style="background:var(--surface);border:1px solid var(--border);padding:20px 24px;display:grid;grid-template-columns:100px 160px 1fr 100px;gap:16px;align-items:center;">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--purple);">WK 5</div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">APR 12-18</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--purple);">INTEGRATION</div>
-      </div>
-      <div style="font-size:12px;color:#8080a0;line-height:1.6;">
-        joe.py wires all modules together. One command runs full pipeline. Error handling. KPI logging. Retry logic. Test with 3 different client types.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;background:rgba(180,79,255,0.08);border:1px solid rgba(180,79,255,0.2);color:var(--purple);text-align:center;">⭐ M5</div>
-    </div>
-
-    <!-- MILESTONE 5 -->
-    <div style="background:rgba(180,79,255,0.04);border:1px solid rgba(180,79,255,0.15);padding:12px 24px;display:flex;align-items:center;gap:16px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--purple);letter-spacing:2px;min-width:100px;">MILESTONE 5</div>
-      <div style="font-size:12px;color:var(--purple);">joe.py runs full pipeline: one command → finished video. 3 test clients pass — Apr 18</div>
-    </div>
-
-    <!-- WEEK 6 -->
-    <div style="background:var(--surface);border:1px solid var(--border);padding:20px 24px;display:grid;grid-template-columns:100px 160px 1fr 100px;gap:16px;align-items:center;">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);">WK 6</div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">APR 19-27</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--gold);">POLISH + TEST</div>
-      </div>
-      <div style="font-size:12px;color:#8080a0;line-height:1.6;">
-        Quality polish. Video quality review. Speed optimization. Edge case handling. Buffer week for debugging and fixes. Final test with Tio Sergio's real content.
-      </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 8px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);color:var(--gold);text-align:center;">🏁 TEST</div>
-    </div>
-
-    <!-- FINAL MILESTONE -->
-    <div style="background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.25);padding:16px 24px;display:flex;align-items:center;gap:16px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2px;min-width:100px;">🏁 LAUNCH TEST</div>
-      <div style="font-size:13px;color:var(--gold);font-weight:600;">python3 smvc.py → finished commercial with script + images + voice + music + watermark — April 27, 2026</div>
-    </div>
-
-  </div>
-
-  <!-- CRITICAL DEPENDENCIES -->
-  <div style="margin-top:24px;background:var(--card);border:1px solid var(--border);padding:24px 28px;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:16px;">⚠️ CRITICAL DEPENDENCIES</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;">BLOCKING</div>
-        <div style="font-size:12px;color:#8080a0;line-height:1.8;">
-          ▸ Gemini API key (have it ✅)<br>
-          ▸ ElevenLabs Creator plan upgrade (Week 3)<br>
-          ▸ ffmpeg installed (have it ✅)<br>
-          ▸ Python 3.10+ (have it ✅)<br>
-          ▸ Claude Pro subscription (for build sessions)
+      <!-- V1 -->
+      <div class="video-card" data-version="v1">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/rIfwpySye3I" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h4>Ian's Roblox Academy</h4>
+          <p>Early pipeline test. Basic assembly, music learning curve, raw output.</p>
+          <div class="video-meta">
+            <span>V1</span>
+            <span>~6.5/10</span>
+            <span>Mar 2026</span>
+          </div>
         </div>
       </div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;">RISK FACTORS</div>
-        <div style="font-size:12px;color:#8080a0;line-height:1.8;">
-          ▸ Gemini API rate limits on free tier<br>
-          ▸ ElevenLabs credit burn rate<br>
-          ▸ Image quality consistency<br>
-          ▸ ffmpeg edge cases with audio<br>
-          ▸ Time availability (2-3 hrs/day target)
+
+      <!-- V2 -->
+      <div class="video-card" data-version="v2">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/NHF8Kq8exco" allowfullscreen></iframe>
         </div>
+        <div class="video-info">
+          <h4>Grecia's Nail Salon</h4>
+          <p>Branded intro/outro. Per-slide customer logo. Music library wired. Laura voiceover improved.</p>
+          <div class="video-meta">
+            <span>V2</span>
+            <span>~8.5/10</span>
+            <span>Mar 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- V3 -->
+      <div class="video-card" data-version="v3">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/M14xMqgAbTM" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h4>Chito's Mariscos</h4>
+          <p>Qiara font. Clean branding. Black outro with fade-in. Full music. Our best yet.</p>
+          <div class="video-meta">
+            <span>V3</span>
+            <span>9.25/10</span>
+            <span>Mar 2026</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ VERSION HISTORY ════════════ -->
+<section class="section" id="versions" style="background: #080808;">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <h2>Version History</h2>
+      <p>From first test to near-production quality in 8 days.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item current">
+        <div class="tl-date">March 22, 2026 — Current</div>
+        <h4>V3 — Clean & Professional</h4>
+        <p>Qiara Sans Serif font. Customer logo 25% transparent, no shadow. Pure black outro with business info fade-in. All Mecha branding removed from video content. Music library fully wired. Laura voiceover stable. Quality: 9.25/10.</p>
+      </div>
+      <div class="tl-item past">
+        <div class="tl-date">March 21, 2026</div>
+        <h4>V2 — Branded Bookends</h4>
+        <p>La Suegra v4 with Pillow-rendered intro/outro. Per-slide customer logo and watermark. Royalty-free music library (Latin, R&B, Rock, Country, Pop). Laura voiceover cutoff fixed (8s → 15s cap). Server v4 with browser video playback. Quality: 8.5/10.</p>
+      </div>
+      <div class="tl-item past">
+        <div class="tl-date">March 20, 2026</div>
+        <h4>V1 — First Pipeline</h4>
+        <p>End-to-end pipeline working: David → Junior → DJ Wonder → La Suegra. Form submission to finished video in ~100 seconds. Basic ffmpeg assembly. No branding, no logo overlay. ElevenLabs music generation (poor quality). Quality: 6/10.</p>
+      </div>
+      <div class="tl-item past">
+        <div class="tl-date">March 15, 2026</div>
+        <h4>V0 — Foundation</h4>
+        <p>Project structure on Mac Mini. David scriptwriter module built. Gemini API connected. First script generated for Arreola's Custom Cabinetry. The Machine is born.</p>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- POST-TEST ROADMAP -->
-  <div style="margin-top:24px;background:var(--card);border:1px solid var(--border);padding:24px 28px;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--cyan);margin-bottom:16px;">AFTER THE TEST — WHAT'S NEXT</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;">MONTH 2 (MAY)</div>
-        <div style="font-size:12px;color:#7070a0;line-height:1.8;">
-          ▸ senior.py — client footage<br>
-          ▸ metiche.py — SEO + hashtags<br>
-          ▸ la_grecia.py — publisher<br>
-          ▸ Epi as client comm layer<br>
-          ▸ First real client video
-        </div>
+<!-- ════════════ CRITICAL PATH ════════════ -->
+<section class="section" id="roadmap">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <h2>Critical Path</h2>
+      <p>From test videos to paying clients. Every week counts.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item past">
+        <div class="tl-date">Week 1 — Mar 15-21 ✅</div>
+        <h4>Pipeline Foundation</h4>
+        <p>David, Junior, DJ Wonder, La Suegra all built and tested. End-to-end pipeline running. Form to finished video in ~100 seconds. 15+ test commercials produced.</p>
       </div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;">MONTH 3 (JUN)</div>
-        <div style="font-size:12px;color:#7070a0;line-height:1.8;">
-          ▸ Mecha website + upload portal<br>
-          ▸ gopher.py — auto intake<br>
-          ▸ Article + coupon generators<br>
-          ▸ 5 paying clients<br>
-          ▸ Stripe billing
-        </div>
+      <div class="tl-item past">
+        <div class="tl-date">Week 2 — Mar 22 ✅</div>
+        <h4>Polish & Quality</h4>
+        <p>Qiara font. Branded intro/outro. Customer logo on every slide. Music library wired. Laura voiceover stable. Quality reached 9.25/10. Mecha HQ v7.0 launched with video gallery.</p>
       </div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:6px;">MONTH 4-5 (JUL-AUG)</div>
-        <div style="font-size:12px;color:#7070a0;line-height:1.8;">
-          ▸ Raffle + giveaway system<br>
-          ▸ Client dashboard<br>
-          ▸ Pay It Forward sponsorship<br>
-          ▸ Scale to 50+ clients<br>
-          ▸ San Luis thrives 🌆
-        </div>
+      <div class="tl-item current">
+        <div class="tl-date">Week 3 — Mar 23-28 ← We Are Here</div>
+        <h4>La Grecia — Publisher</h4>
+        <p>Build auto-publishing to Instagram Reels and Facebook Reels via Meta Graph API. Metiche provides SEO hashtags and bilingual captions. First automated post from pipeline to platform.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Week 4 — Mar 29 - Apr 4</div>
+        <h4>Real Client Testing</h4>
+        <p>Collect real business data from San Luis. Run pipeline with real photos and info. Test videos with actual business owners. Gather feedback. Iterate on quality.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Week 5 — Apr 5-11</div>
+        <h4>First Paying Clients</h4>
+        <p>Onboard 3-5 paying clients at Go Halfers rate ($49). Stripe billing. Client dashboard. Prove the model works with real revenue.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Week 6-8 — Apr 12-27</div>
+        <h4>Scale & Optimize</h4>
+        <p>Monitor analytics. Optimize video quality per category. Add more music tracks. Build Gopher for automated client intake. Target: 10+ active clients.</p>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- FOOTER -->
-<div class="footer">
-  <div class="footer-logo">MECHA</div>
-  <div>DEATH SQUAD v6.0 — SMVC — PYTHON PIPELINE — MAC MINI — SAN LUIS RIO COLORADO — 2026</div>
-  <div style="margin-top:8px; color: rgba(255,215,0,0.3)">👑 CLAUDE + MANNY — ⚡ JOE · DAVID · JUNIOR · SENIOR · RAMIRO · DJ WONDER · LA SUEGRA · METICHE · LA GRECIA · MONITOR · REPORT · BILLING</div>
-</div>
+<!-- ════════════ PLATFORMS ════════════ -->
+<section class="section" id="platforms">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <h2>Ship Everywhere</h2>
+      <p>One video. Six platforms. Every screen in town.</p>
+    </div>
+    <div class="platforms-row">
+      <div class="platform-badge">TikTok</div>
+      <div class="platform-badge">Instagram Reels</div>
+      <div class="platform-badge">Facebook Reels</div>
+      <div class="platform-badge">Snapchat</div>
+      <div class="platform-badge">YouTube Shorts</div>
+      <div class="platform-badge">X.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ PRICING ════════════ -->
+<section class="section" id="pricing" style="background: #080808;">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-divider"></div>
+      <h2>Pricing</h2>
+      <p>One client per category per market. Exclusivity is your moat.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Go Halfers</h3>
+        <div class="price-amount">$49</div>
+        <div class="price-period">first month</div>
+        <p>Half price to start. Full service. Auto-converts to $100/mo after month one.</p>
+      </div>
+      <div class="price-card featured">
+        <h3>Core Tier</h3>
+        <div class="price-amount">$100</div>
+        <div class="price-period">per month</div>
+        <p>Video commercials. Six platforms. One client per category. Your market, locked down.</p>
+      </div>
+      <div class="price-card">
+        <h3>Community</h3>
+        <div class="price-amount">$2</div>
+        <div class="price-period">per month</div>
+        <p>Nonprofits and churches. Because community comes first. Always.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="brand">MECHA</div>
+    <p>HQ v7.0 · SMVC Pipeline · Built by Claude + Manny · Mac Mini · San Luis Rio Colorado · 2026</p>
+    <p style="margin-top: 8px;">David · Junior · DJ Wonder · La Suegra · La Grecia · Metiche · Gopher · Monitor · Billing</p>
+  </div>
+</footer>
+
+<script>
+// Gallery filter
+function filterGallery(version) {
+  document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.video-card').forEach(card => {
+    if (version === 'all' || card.dataset.version === version) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.step-card, .pipe-card, .video-card, .price-card, .tl-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'all 0.6s ease';
+  observer.observe(el);
+});
+</script>
 
 </body>
 </html>

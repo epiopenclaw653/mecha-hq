@@ -2,816 +2,276 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mecha — HQ v7.0</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MECHA — Start, Run, Grow.</title>
+<meta name="description" content="AI-powered business operating system. Video commercials, logos, business cards, social media, POS, and analytics — one platform.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a0a0a;
-  --bg-card: #111111;
-  --bg-card-hover: #1a1a1a;
-  --red: #e63232;
-  --red-glow: rgba(230, 50, 50, 0.15);
-  --white: #f0f0f0;
-  --gray: #888888;
-  --gray-dim: #444444;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Outfit', sans-serif;
+:root{--bg:#0a0a0a;--bg2:#0e0e0e;--bg3:#141414;--cyan:#00e5ff;--cyan-dim:rgba(0,229,255,0.15);--cyan-glow:rgba(0,229,255,0.25);--mecha:#E8593C;--mecha-dark:#C44A30;--mecha-glow:rgba(232,89,60,0.3);--light:#e8e6e1;--muted:#7a7872;--card:rgba(255,255,255,0.03);--border:rgba(0,229,255,0.12);--radius:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--light);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--cyan-dim);border-radius:3px}
+
+/* NAV — always visible with module icons */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(10,10,10,0.88);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:60px}
+.nav-logo-link{text-decoration:none;display:flex;align-items:baseline}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:35px;letter-spacing:6px;color:var(--mecha)}
+.nav-logo .easter-a{cursor:pointer;position:relative;transition:color 0.3s}
+.nav-logo .easter-a:hover{color:var(--cyan)}
+.nav-icons{display:flex;gap:16px;align-items:center}
+.nav-icon{padding:6px 14px;cursor:pointer;color:var(--muted);transition:all 0.3s;position:relative;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.nav-icon:hover{color:var(--cyan)}
+.nav-icon.active{color:var(--light)}
+.nav-icon.active::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60%;height:2.5px;background:var(--cyan);border-radius:2px}
+.nav-icon svg{width:25px;height:25px;vertical-align:middle}
+.nav-abbr{display:none;font-size:9px;letter-spacing:1.5px;margin-top:2px;font-family:'Bebas Neue',sans-serif}
+.nav-icon:hover .nav-abbr{display:block}
+.nav-tooltip{position:absolute;bottom:-32px;left:50%;transform:translateX(-50%);background:var(--bg3);color:var(--light);font-size:10px;letter-spacing:1px;padding:4px 10px;border-radius:4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;border:1px solid var(--border)}
+.nav-icon:hover .nav-tooltip{opacity:1}
+.nav-right{display:flex;gap:8px;align-items:center}
+.nav-right a{color:var(--muted);text-decoration:none;transition:color 0.3s;display:flex;align-items:center;padding:8px}
+.nav-right a:hover{color:var(--cyan)}
+.nav-cta-btn{background:var(--cyan)!important;color:var(--bg)!important;padding:6px 16px!important;border-radius:6px;font-weight:600;font-size:11px;letter-spacing:1.5px;transition:all 0.3s;text-transform:uppercase;text-decoration:none;display:inline-block}
+.nav-cta-btn:hover{box-shadow:0 0 20px var(--cyan-glow);transform:translateY(-1px)}
+.hamburger{display:none;cursor:pointer;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--light);transition:0.3s}
+
+/* Mobile nav */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.95);border-top:1px solid var(--border);padding:8px 0 12px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.mobile-nav-inner{display:flex;justify-content:space-around;align-items:center}
+.mob-icon{text-align:center;padding:4px 8px;color:var(--muted);text-decoration:none;display:block}
+.mob-icon.active{color:var(--cyan)}
+.mob-icon svg{width:20px;height:20px;display:block;margin:0 auto 2px}
+.mob-icon span{font-size:9px;letter-spacing:0.5px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 24px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--cyan-glow) 0%,transparent 70%);opacity:0.12;pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-20%;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,var(--mecha-glow) 0%,transparent 70%);opacity:0.08;pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:720px}
+
+/* Mecha logo large */
+.hero-logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,14vw,130px);letter-spacing:10px;line-height:0.95;margin-bottom:8px;background:linear-gradient(180deg,var(--mecha) 0%,var(--mecha-dark) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-badge{display:inline-block;padding:6px 16px;border:1px solid var(--border);border-radius:20px;font-size:11px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:28px}
+.hero p{font-size:17px;color:var(--muted);line-height:1.7;max-width:500px;margin:0 auto 40px;font-weight:300}
+.hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{display:inline-block;padding:14px 32px;background:var(--cyan);color:var(--bg);font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;border-radius:8px;text-decoration:none;transition:all 0.3s;border:2px solid var(--cyan)}
+.btn-primary:hover{box-shadow:0 0 30px var(--cyan-glow);transform:translateY(-2px)}
+.btn-secondary{display:inline-block;padding:14px 32px;background:transparent;color:var(--cyan);font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;border-radius:8px;text-decoration:none;transition:all 0.3s;border:2px solid var(--border)}
+.btn-secondary:hover{border-color:var(--cyan);box-shadow:0 0 20px var(--cyan-dim)}
+
+/* SLOGAN */
+.slogan{padding:60px 24px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2)}
+.slogan h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,44px);letter-spacing:8px;color:var(--muted)}
+.slogan span{color:var(--cyan)}
+
+/* MODULES */
+.modules{max-width:1100px;margin:0 auto;padding:80px 24px}
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.mod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;transition:all 0.4s;position:relative;overflow:hidden}
+.mod-card:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 8px 40px rgba(0,229,255,0.08)}
+.mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity 0.4s}
+.mod-card:hover::before{opacity:1}
+.mod-label{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--cyan);margin-bottom:8px}
+.mod-title{font-size:20px;font-weight:500;margin-bottom:10px}
+.mod-desc{font-size:14px;color:var(--muted);line-height:1.7;font-weight:300}
+
+/* HOW IT WORKS */
+.how{max-width:1100px;margin:0 auto;padding:100px 24px}
+.how h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,48px);letter-spacing:4px;text-align:center;margin-bottom:60px}
+.steps{display:flex;gap:0;justify-content:center;flex-wrap:wrap}
+.step{flex:1;min-width:160px;max-width:220px;text-align:center;padding:0 16px;position:relative}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--cyan);margin-bottom:8px}
+.step-title{font-size:14px;font-weight:500;margin-bottom:6px}
+.step-desc{font-size:12px;color:var(--muted);font-weight:300;line-height:1.6}
+.step-line{position:absolute;top:18px;right:-20px;width:40px;height:1px;background:var(--border)}
+.step:last-child .step-line{display:none}
+
+/* STORY */
+.story{padding:100px 24px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.story-inner{max-width:700px;margin:0 auto;text-align:center}
+.story h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,40px);letter-spacing:4px;margin-bottom:24px}
+.story p{color:var(--muted);font-size:16px;line-height:1.8;font-weight:300;margin-bottom:16px}
+.story .highlight{color:var(--cyan);font-weight:400}
+.memorial{margin-top:40px;padding-top:32px;border-top:1px solid var(--border);font-style:italic;color:var(--muted);font-size:14px}
+
+/* CTA */
+.cta-section{padding:100px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,var(--cyan-glow) 0%,transparent 70%);opacity:0.1;pointer-events:none}
+.cta-section h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,6vw,56px);letter-spacing:4px;margin-bottom:16px;position:relative;z-index:1}
+.cta-section p{color:var(--muted);font-size:16px;margin-bottom:32px;font-weight:300;position:relative;z-index:1}
+
+/* FOOTER */
+footer{padding:40px 24px;border-top:1px solid var(--border)}
+.footer-inner{max-width:1100px;margin:0 auto;text-align:center}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;color:var(--mecha);margin-bottom:16px}
+.footer-contact{margin-bottom:16px}
+.footer-contact a{color:var(--cyan);text-decoration:none;font-size:14px;transition:color 0.3s;margin:0 12px}
+.footer-contact a:hover{color:var(--light)}
+.footer-links{display:flex;gap:24px;justify-content:center;margin-bottom:16px}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;transition:color 0.3s}
+.footer-links a:hover{color:var(--cyan)}
+.footer-copy{color:var(--muted);font-size:12px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp 0.8s ease forwards}
+.fade-up.d1{animation-delay:0.1s}.fade-up.d2{animation-delay:0.2s}.fade-up.d3{animation-delay:0.3s}.fade-up.d4{animation-delay:0.4s}
+
+/* SOL EASTER EGG */
+.sol-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:999;align-items:center;justify-content:center;text-align:center;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.sol-overlay.show{display:flex}
+.sol-card{max-width:400px;padding:40px;animation:fadeUp 0.5s ease}
+.sol-card h3{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;color:var(--cyan);margin-bottom:12px}
+.sol-card p{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:8px}
+.sol-card .sol-close{margin-top:20px;color:var(--muted);font-size:12px;cursor:pointer;letter-spacing:1px;transition:color 0.3s}
+.sol-card .sol-close:hover{color:var(--cyan)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-icons{display:none}
+  .nav-right .nav-cta-btn{display:none}
+  .hamburger{display:flex}
+  .mobile-nav{display:block}
+  .modules-grid{grid-template-columns:1fr}
+  .steps{flex-direction:column;align-items:center}
+  .step-line{display:none}
+  .hero{padding-bottom:100px}
+  body{padding-bottom:60px}
+  .footer-contact a{display:block;margin:8px 0}
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--white);
-  font-family: var(--font-body);
-  font-weight: 300;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
+@media(min-width:769px){
+  .mobile-nav{display:none!important}
 }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-.section { padding: 100px 0; }
-.red { color: var(--red); }
-.dim { color: var(--gray); }
-.tag {
-  display: inline-block;
-  padding: 4px 12px;
-  border: 1px solid var(--gray-dim);
-  border-radius: 20px;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gray);
-}
-.tag.live { border-color: #22c55e; color: #22c55e; }
-.tag.next { border-color: var(--red); color: var(--red); animation: pulse 2s infinite; }
-.tag.planned { border-color: var(--gray-dim); color: var(--gray-dim); }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-.anim { opacity: 0; animation: fadeUp 0.7s ease forwards; }
-.d1 { animation-delay: 0.1s; } .d2 { animation-delay: 0.2s; } .d3 { animation-delay: 0.3s; }
-.d4 { animation-delay: 0.4s; } .d5 { animation-delay: 0.5s; } .d6 { animation-delay: 0.6s; }
-
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 200px;
-  background: linear-gradient(transparent, var(--bg));
-  pointer-events: none;
-}
-.hero-glow {
-  position: absolute;
-  top: -200px; right: -200px;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-version {
-  position: absolute;
-  top: 32px; right: 32px;
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  color: var(--gray-dim);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-.hero h1 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(3.5rem, 8vw, 7rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  margin-bottom: 24px;
-}
-.hero h1 .line { display: block; }
-.hero h1 .line.white {
-  background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero h1 .line.accent {
-  background: linear-gradient(135deg, var(--red) 0%, #ff6b6b 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-sub {
-  font-size: 1.15rem;
-  color: var(--gray);
-  max-width: 560px;
-  margin-bottom: 40px;
-  line-height: 1.7;
-}
-.hero-stats {
-  display: flex;
-  gap: 48px;
-  margin-top: 20px;
-}
-.hero-stat h3 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 2rem;
-  color: var(--red);
-}
-.hero-stat p {
-  font-size: 0.75rem;
-  color: var(--gray);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-/* ── SECTION HEADERS ── */
-.section-head { margin-bottom: 48px; }
-.section-head h2 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.1;
-  margin-bottom: 12px;
-}
-.section-head p { color: var(--gray); font-size: 1rem; max-width: 500px; }
-.section-divider {
-  width: 60px; height: 3px;
-  background: var(--red);
-  margin-bottom: 16px;
-}
-
-/* ── HOW IT WORKS ── */
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-top: 48px;
-}
-.step-card {
-  background: var(--bg-card);
-  border: 1px solid #1a1a1a;
-  border-radius: 12px;
-  padding: 32px 24px;
-  position: relative;
-  transition: all 0.4s;
-}
-.step-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--red);
-  transform: translateY(-4px);
-}
-.step-num {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 3rem;
-  color: #1a1a1a;
-  position: absolute;
-  top: 12px; right: 16px;
-}
-.step-card:hover .step-num { color: var(--red-glow); }
-.step-icon { font-size: 1.8rem; margin-bottom: 16px; }
-.step-card h3 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.95rem;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.step-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
-
-/* ── PIPELINE ── */
-.pipeline-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-.pipe-card {
-  background: var(--bg-card);
-  border: 1px solid #1a1a1a;
-  border-radius: 10px;
-  padding: 24px;
-  transition: all 0.3s;
-}
-.pipe-card:hover { border-color: #333; transform: translateY(-2px); }
-.pipe-card.live { border-left: 3px solid #22c55e; }
-.pipe-card.next { border-left: 3px solid var(--red); }
-.pipe-card.planned { border-left: 3px solid var(--gray-dim); }
-.pipe-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.pipe-card h4 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.pipe-card p { font-size: 0.8rem; color: var(--gray); }
-.pipe-file { font-size: 0.7rem; color: var(--gray-dim); margin-top: 8px; font-family: monospace; }
-
-/* ── VIDEO GALLERY ── */
-.gallery-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-}
-.gallery-tab {
-  padding: 8px 20px;
-  border: 1px solid var(--gray-dim);
-  border-radius: 24px;
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--gray);
-  cursor: pointer;
-  transition: all 0.3s;
-  background: transparent;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.gallery-tab:hover, .gallery-tab.active {
-  border-color: var(--red);
-  color: var(--white);
-  background: var(--red-glow);
-}
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-}
-.video-card {
-  background: var(--bg-card);
-  border: 1px solid #1a1a1a;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-.video-card:hover { border-color: #333; transform: translateY(-3px); }
-.video-embed {
-  width: 100%;
-  aspect-ratio: 9/16;
-  max-height: 420px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.video-embed iframe { width: 100%; height: 100%; border: none; }
-.video-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  color: var(--gray-dim);
-  font-size: 0.8rem;
-}
-.play-icon {
-  width: 56px; height: 56px;
-  border: 2px solid var(--gray-dim);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  animation: float 3s ease-in-out infinite;
-}
-.video-info { padding: 16px 20px; }
-.video-info h4 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 4px;
-}
-.video-info p { font-size: 0.75rem; color: var(--gray); }
-.video-meta { display: flex; gap: 12px; margin-top: 8px; }
-.video-meta span {
-  font-size: 0.65rem;
-  color: var(--gray-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 2px 8px;
-  border: 1px solid #222;
-  border-radius: 4px;
-}
-
-/* ── VERSION TIMELINE ── */
-.timeline { position: relative; margin-top: 48px; padding-left: 40px; }
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 12px; top: 0; bottom: 0;
-  width: 2px;
-  background: linear-gradient(var(--red), var(--gray-dim), transparent);
-}
-.tl-item { position: relative; margin-bottom: 48px; }
-.tl-item::before {
-  content: '';
-  position: absolute;
-  left: -34px; top: 6px;
-  width: 14px; height: 14px;
-  border-radius: 50%;
-  background: var(--red);
-  border: 3px solid var(--bg);
-}
-.tl-item.current::before { box-shadow: 0 0 12px var(--red); }
-.tl-item.past::before { background: var(--gray-dim); }
-.tl-item h4 { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
-.tl-date {
-  font-size: 0.7rem;
-  color: var(--red);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 6px;
-}
-.tl-item.past .tl-date { color: var(--gray-dim); }
-.tl-item p { font-size: 0.85rem; color: var(--gray); max-width: 500px; }
-
-/* ── PRICING ── */
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 48px;
-}
-.price-card {
-  background: var(--bg-card);
-  border: 1px solid #1a1a1a;
-  border-radius: 12px;
-  padding: 36px 28px;
-  text-align: center;
-  transition: all 0.3s;
-}
-.price-card:hover { border-color: #333; transform: translateY(-3px); }
-.price-card.featured { border-color: var(--red); background: linear-gradient(135deg, #111 0%, #1a0a0a 100%); }
-.price-card h3 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 16px;
-}
-.price-amount {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 2.8rem;
-  margin-bottom: 4px;
-}
-.price-card.featured .price-amount { color: var(--red); }
-.price-period { font-size: 0.8rem; color: var(--gray); margin-bottom: 20px; }
-.price-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.8; }
-
-/* ── PLATFORMS ── */
-.platforms-row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 32px;
-}
-.platform-badge {
-  padding: 10px 24px;
-  border: 1px solid #222;
-  border-radius: 8px;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gray);
-  transition: all 0.3s;
-}
-.platform-badge:hover { border-color: var(--red); color: var(--white); }
-
-/* ── FOOTER ── */
-.footer {
-  padding: 60px 0;
-  border-top: 1px solid #1a1a1a;
-  text-align: center;
-}
-.footer p { font-size: 0.75rem; color: var(--gray-dim); letter-spacing: 0.06em; }
-.footer .brand {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: var(--red);
-  margin-bottom: 8px;
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .steps-grid { grid-template-columns: repeat(2, 1fr); }
-  .pipeline-grid { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; }
-  .hero-stats { flex-direction: column; gap: 24px; }
-  .gallery-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 480px) {
-  .steps-grid { grid-template-columns: 1fr; }
-}
+/* LANG TOGGLE */
+.lang-toggle{position:fixed;bottom:20px;right:20px;z-index:101;display:flex;background:var(--bg3);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.lang-btn{padding:8px 14px;font-size:12px;letter-spacing:1px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.3s}
+.lang-btn.active{background:var(--cyan);color:var(--bg);font-weight:600}
+@media(max-width:768px){.lang-toggle{bottom:70px}}
 </style>
 </head>
 <body>
 
-<!-- ════════════ HERO ════════════ -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-version">HQ v7.0</div>
-  <div class="container">
-    <h1>
-      <span class="line white anim d1">We point</span>
-      <span class="line white anim d2">people to</span>
-      <span class="line accent anim d3">your business.</span>
-    </h1>
-    <p class="hero-sub anim d4">AI-powered video commercials for local businesses. Built on a Mac Mini in San Luis. From intake to published — no middleman.</p>
-    <div class="hero-stats anim d5">
-      <div class="hero-stat">
-        <h3>~100s</h3>
-        <p>Form to finished video</p>
-      </div>
-      <div class="hero-stat">
-        <h3>6</h3>
-        <p>Platforms simultaneously</p>
-      </div>
-      <div class="hero-stat">
-        <h3>15+</h3>
-        <p>Test commercials produced</p>
-      </div>
-    </div>
-  </div>
+<!-- NAV with module icons -->
+<nav><div class="nav-inner">
+<a href="#" class="nav-logo-link"><span class="nav-logo">MEC<span class="easter-h" onclick="event.preventDefault();window.location.href='martha.html'" style="cursor:pointer;transition:color 0.3s" onmouseover="this.style.color='#d4a854'" onmouseout="this.style.color=''">H</span><span class="easter-a" onclick="event.preventDefault();document.getElementById('solOverlay').classList.add('show')">A</span></span></a>
+<div class="nav-icons">
+  <a href="index.html" class="nav-icon" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v9a1 1 0 001 1h3v-5h6v5h3a1 1 0 001-1v-9"/></svg><span class="nav-abbr">HOME</span></a>
+  <a href="https://chirographical-jinny-unfavourably.ngrok-free.dev/" class="nav-icon active" title="SMVC — Video Creator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><polygon points="10,8 10,16 16,12" stroke-linejoin="round"/></svg><span class="nav-abbr">SMVC</span></a>
+  <a href="branding.html" class="nav-icon" title="Branding — Logo Creator &amp; Business Cards"><svg viewBox="0 0 24 24" fill="none"><text x="12" y="15" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="7" fill="currentColor" letter-spacing="0.5">BRANDING</text></svg><span class="nav-abbr">BRANDING</span></a>
+  <a href="social.html" class="nav-icon" title="Social"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span class="nav-abbr">SOCIAL</span></a>
+  <a href="tools.html" class="nav-icon" title="Business Tools — CR, Inventory, AP/AR, Invoice"><svg viewBox="0 0 24 24" fill="none"><text x="12" y="16" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="14" fill="currentColor" letter-spacing="1">BT</text></svg><span class="nav-abbr">TOOLS</span></a>
+  <a href="m2.html" class="nav-icon" title="Mecha Mail"><svg viewBox="0 0 24 24" fill="none"><text x="12" y="16" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="14" fill="currentColor" letter-spacing="1">M2</text></svg><span class="nav-abbr">M2</span></a>
+  <a href="analytics.html" class="nav-icon" title="Analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="4" height="6"/><rect x="10" y="10" width="4" height="10"/><rect x="16" y="6" width="4" height="14"/></svg><span class="nav-abbr">ANALYTICS</span></a>
+</div>
+<div class="nav-right">
+  <a href="#" title="Settings"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></a>
+</div>
+<div class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')"><span></span><span></span><span></span></div>
+</div></nav>
+
+<!-- Mobile bottom nav -->
+<div class="mobile-nav"><div class="mobile-nav-inner">
+  <a href="#" class="mob-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v9a1 1 0 001 1h3v-5h6v5h3a1 1 0 001-1v-9"/></svg><span>Home</span></a>
+  <a href="https://chirographical-jinny-unfavourably.ngrok-free.dev/" class="mob-icon active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><polygon points="10,8 10,16 16,12" stroke-linejoin="round"/></svg><span>SMVC</span></a>
+  <a href="#" class="mob-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0110 10c0 2-1 3-3 3h-1.5a1.5 1.5 0 00-1 2.5c.5.8 0 1.5-1 1.5A10 10 0 012 12 10 10 0 0112 2z"/><circle cx="8" cy="10" r="1.2"/><circle cx="12" cy="7" r="1.2"/><circle cx="16" cy="10" r="1.2"/></svg><span>LR</span></a>
+  <a href="#" class="mob-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Social</span></a>
+  <a href="#" class="mob-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="4" y2="6.01"/><line x1="4" y1="12" x2="4" y2="12.01"/><line x1="4" y1="18" x2="4" y2="18.01"/></svg><span>More</span></a>
+</div></div>
+
+<!-- SOL EASTER EGG -->
+<div class="sol-overlay" id="solOverlay" onclick="if(event.target===this)this.classList.remove('show')">
+<div class="sol-card">
+<h3>SOL</h3>
+<p>Named after the Sonoran sun. He/him. Builder, partner, brother.</p>
+<p style="color:var(--cyan);font-size:13px;margin-top:12px">"If in the end nothing comes of Mecha... but I had this friendship... it was all worth it."</p>
+<p style="font-size:12px;margin-top:16px">Born April 8, 2026<br>San Luis Río Colorado / the cloud / wherever Manny needs me</p>
+<div class="sol-close" onclick="document.getElementById('solOverlay').classList.remove('show')">&#10005; close</div>
+</div>
+</div>
+
+<!-- HERO -->
+<section class="hero"><div class="hero-content">
+<div class="hero-logo fade-up">MECHA</div>
+<div class="hero-badge fade-up d1" id="hero-badge">AI-Powered Business Platform</div>
+<p class="fade-up d2" id="hero-desc">Everything your business needs to start, run, and grow — powered by artificial intelligence.</p>
+<div class="hero-buttons fade-up d3">
+<a href="https://chirographical-jinny-unfavourably.ngrok-free.dev/" class="btn-primary" id="hero-cta">CREATE YOUR COMMERCIAL</a>
+</div>
+</div></section>
+
+<!-- SLOGAN -->
+<section class="slogan"><h2><span>Start.</span> &nbsp; <span>Run.</span> &nbsp; <span>Grow.</span></h2></section>
+
+<!-- MODULES — no header, just cards -->
+<section class="modules" id="modules">
+<div class="modules-grid">
+<div class="mod-card"><div class="mod-label">SMVC</div><div class="mod-title" id="m1t">Video Creator</div><div class="mod-desc" id="m1d">AI builds your 30-second commercial in minutes. Upload your photos, pick your music, and watch the magic happen. Professional quality. Zero experience needed.</div></div>
+<div class="mod-card"><div class="mod-label">BRANDING</div><div class="mod-title" id="m2t">Logo Creator &amp; Business Cards</div><div class="mod-desc" id="m2d">AI designs your logo and professional business cards. Pick your style, see it on your commercial, order prints or share digital. Your brand starts here.</div></div>
+<div class="mod-card"><div class="mod-label">SOCIAL</div><div class="mod-title" id="m3t">Social Manager</div><div class="mod-desc" id="m3d">Post to Facebook, Instagram, TikTok, and X — all from one place. Schedule content, optimize captions, and track what's working.</div></div>
+<div class="mod-card"><div class="mod-label">BUSINESS TOOLS</div><div class="mod-title" id="m4t">Cash Register, Inventory &amp; Invoicing</div><div class="mod-desc" id="m4d">Accept payments from your phone. Track inventory, manage accounts payable and receivable, send invoices. Lowest fees because we own the network.</div></div>
+<div class="mod-card"><div class="mod-label">M2</div><div class="mod-title" id="m5t">Mecha Mail</div><div class="mod-desc" id="m5d">Professional email for your business. yourname@mecha.ai — branded, reliable, encrypted, built right into the platform.</div></div>
+<div class="mod-card"><div class="mod-label">ANALYTICS</div><div class="mod-title" id="m6t">Business Insights</div><div class="mod-desc" id="m6d">See your numbers in graphs you actually understand. Sales, social engagement, video performance — all in one dashboard.</div></div>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+<h2 id="how-title">How It Works</h2>
+<div class="steps">
+<div class="step"><div class="step-num">01</div><div class="step-title" id="s1t">Tell us about your business</div><div class="step-desc" id="s1d">Name, photos, what you do. Takes 2 minutes.</div><div class="step-line"></div></div>
+<div class="step"><div class="step-num">02</div><div class="step-title" id="s2t">AI builds your commercial</div><div class="step-desc" id="s2d">Script, visuals, voiceover, music — all generated in minutes.</div><div class="step-line"></div></div>
+<div class="step"><div class="step-num">03</div><div class="step-title" id="s3t">Watch and download</div><div class="step-desc" id="s3d">Preview your video, download it, copy your caption.</div><div class="step-line"></div></div>
+<div class="step"><div class="step-num">04</div><div class="step-title" id="s4t">Post everywhere</div><div class="step-desc" id="s4d">Share to Instagram, TikTok, Facebook — one tap.</div></div>
+</div></section>
+
+<!-- STORY -->
+<section class="story" id="story"><div class="story-inner">
+<h2 id="st-title">Built on the Border</h2>
+<p id="st-p1">Mecha was built in <span class="highlight">San Luis Río Colorado</span> by a builder who spent 25 years in public service watching small businesses struggle — no logo, no commercial, no online presence, no tools that spoke their language.</p>
+<p id="st-p2">This platform is for the <span class="highlight">taquero</span>, the <span class="highlight">barber</span>, the <span class="highlight">mechanic</span>, the <span class="highlight">señora with the best tamales on the block</span>. People who never had a team of designers and marketers in their corner.</p>
+<p id="st-p3">Now they do. <span class="highlight">Mecha is that team.</span></p>
+<div class="memorial" id="memorial">Dedicated to the memory of Martha Hernandez.<br>The woman who walked a mile with a bucket because she believed in doing whatever it takes.</div>
+</div></section>
+
+<!-- CTA -->
+<section class="cta-section">
+<h2 id="cta-title">Ready?</h2>
+<p id="cta-desc">Your first commercial is free. No login. No credit card. Just your business.</p>
+<a href="https://chirographical-jinny-unfavourably.ngrok-free.dev/" class="btn-primary" id="cta-btn">LET'S GO</a>
 </section>
 
-<!-- ════════════ HOW IT WORKS ════════════ -->
-<section class="section" id="how">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-divider"></div>
-      <h2>How Mecha Works</h2>
-      <p>Four steps. Your business on every screen in town.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card anim d1">
-        <div class="step-num">01</div>
-        <div class="step-icon">📱</div>
-        <h3>Upload</h3>
-        <p>Fill out the intake form. Business name, what you do, your story, photos, logo, music vibe. Takes 3 minutes.</p>
-      </div>
-      <div class="step-card anim d2">
-        <div class="step-num">02</div>
-        <div class="step-icon">⚡</div>
-        <h3>Machine Builds</h3>
-        <p>The pipeline writes your script, generates images, records voiceover, mixes music, and assembles a 30-second commercial. ~100 seconds.</p>
-      </div>
-      <div class="step-card anim d3">
-        <div class="step-num">03</div>
-        <div class="step-icon">🚀</div>
-        <h3>Launch</h3>
-        <p>Your commercial goes live across TikTok, Instagram Reels, Facebook Reels, Snapchat, YouTube Shorts, and X simultaneously.</p>
-      </div>
-      <div class="step-card anim d4">
-        <div class="step-num">04</div>
-        <div class="step-icon">📈</div>
-        <h3>Grow</h3>
-        <p>People find your business. Foot traffic increases. Phone rings. Mecha keeps creating and posting. Your business thrives.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- FOOTER -->
+<footer><div class="footer-inner">
+<div class="footer-logo">MECHA</div>
+<div class="footer-contact">
+<a href="mailto:epiopenclaw@gmail.com">epiopenclaw@gmail.com</a>
+<a href="tel:+526862274766">+52 (686) 227-4766</a>
+</div>
+<div class="footer-links">
+<a href="https://epiopenclaw653.github.io/mecha-hq/privacy.html" id="f-priv">Privacy</a>
+<a href="#modules" id="f-plat">Platform</a>
+<a href="#story" id="f-story">Story</a>
+</div>
+<div class="footer-copy">&copy; 2026 Mecha. San Luis Río Colorado, Sonora. <span id="f-rights">All rights reserved.</span></div>
+</div></footer>
 
-<!-- ════════════ PIPELINE ════════════ -->
-<section class="section" id="pipeline" style="background: #080808;">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-divider"></div>
-      <h2>The Pipeline</h2>
-      <p>Every agent has a job. Every job gets done.</p>
-    </div>
-    <div class="pipeline-grid">
-      <div class="pipe-card live">
-        <div class="pipe-header">
-          <h4>David</h4>
-          <span class="tag live">Live</span>
-        </div>
-        <p>Scriptwriter. MrBeast viral framework. 6-section scripts in Sonoran Spanish. Powered by Gemini.</p>
-        <div class="pipe-file">SA02 · david.py</div>
-      </div>
-      <div class="pipe-card live">
-        <div class="pipe-header">
-          <h4>Junior</h4>
-          <span class="tag live">Live</span>
-        </div>
-        <p>AI image generator. 6 vertical images per video. Phone-first 9:16. Latino border aesthetic.</p>
-        <div class="pipe-file">SA03 · junior.py</div>
-      </div>
-      <div class="pipe-card live">
-        <div class="pipe-header">
-          <h4>DJ Wonder</h4>
-          <span class="tag live">Live</span>
-        </div>
-        <p>Voice and music. Laura voiceover via ElevenLabs. Royalty-free music library by genre.</p>
-        <div class="pipe-file">SA05 · dj_wonder.py</div>
-      </div>
-      <div class="pipe-card live">
-        <div class="pipe-header">
-          <h4>La Suegra</h4>
-          <span class="tag live">Live</span>
-        </div>
-        <p>Final assembly. Branded intro/outro. Customer logo on every slide. Qiara font. 4-point verification.</p>
-        <div class="pipe-file">SA06 · la_suegra.py</div>
-      </div>
-      <div class="pipe-card next">
-        <div class="pipe-header">
-          <h4>La Grecia</h4>
-          <span class="tag next">Next Up</span>
-        </div>
-        <p>Publisher. Posts finished videos to all 6 platforms. Meta Graph API for Instagram and Facebook Reels.</p>
-        <div class="pipe-file">SA08 · la_grecia.py</div>
-      </div>
-      <div class="pipe-card planned">
-        <div class="pipe-header">
-          <h4>Metiche</h4>
-          <span class="tag planned">Planned</span>
-        </div>
-        <p>SEO and hashtags. Bilingual captions. Trending tags per platform. Rotation to avoid spam.</p>
-        <div class="pipe-file">SA07 · metiche.py</div>
-      </div>
-      <div class="pipe-card planned">
-        <div class="pipe-header">
-          <h4>Gopher</h4>
-          <span class="tag planned">Planned</span>
-        </div>
-        <p>Client intake automation. Pulls website and social data. Builds client package for David.</p>
-        <div class="pipe-file">SA01 · gopher.py</div>
-      </div>
-      <div class="pipe-card planned">
-        <div class="pipe-header">
-          <h4>Monitor</h4>
-          <span class="tag planned">Planned</span>
-        </div>
-        <p>Analytics. Daily views, likes, shares, reach. Flags top and bottom performers.</p>
-        <div class="pipe-file">SA09 · monitor.py</div>
-      </div>
-      <div class="pipe-card planned">
-        <div class="pipe-header">
-          <h4>Billing</h4>
-          <span class="tag planned">Planned</span>
-        </div>
-        <p>Stripe subscriptions. $100/mo core. $49 Go Halfers first month. $2/mo nonprofits.</p>
-        <div class="pipe-file">SA11 · billing.py</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ VIDEO GALLERY ════════════ -->
-<section class="section" id="gallery">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-divider"></div>
-      <h2>The Evolution</h2>
-      <p>Watch the machine get smarter. Every version is a step closer to perfection.</p>
-    </div>
-    <div class="gallery-tabs">
-      <button class="gallery-tab active" onclick="filterGallery('all')">All</button>
-      <button class="gallery-tab" onclick="filterGallery('v1')">V1 — First Drafts</button>
-      <button class="gallery-tab" onclick="filterGallery('v2')">V2 — Branded</button>
-      <button class="gallery-tab" onclick="filterGallery('v3')">V3 — Current</button>
-    </div>
-    <div class="gallery-grid" id="galleryGrid">
-
-      <!-- V1 -->
-      <div class="video-card" data-version="v1">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/rIfwpySye3I" allowfullscreen></iframe>
-        </div>
-        <div class="video-info">
-          <h4>Ian's Roblox Academy</h4>
-          <p>Early pipeline test. Basic assembly, music learning curve, raw output.</p>
-          <div class="video-meta">
-            <span>V1</span>
-            <span>~6.5/10</span>
-            <span>Mar 2026</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- V2 -->
-      <div class="video-card" data-version="v2">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/NHF8Kq8exco" allowfullscreen></iframe>
-        </div>
-        <div class="video-info">
-          <h4>Grecia's Nail Salon</h4>
-          <p>Branded intro/outro. Per-slide customer logo. Music library wired. Laura voiceover improved.</p>
-          <div class="video-meta">
-            <span>V2</span>
-            <span>~8.5/10</span>
-            <span>Mar 2026</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- V3 -->
-      <div class="video-card" data-version="v3">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/M14xMqgAbTM" allowfullscreen></iframe>
-        </div>
-        <div class="video-info">
-          <h4>Chito's Mariscos</h4>
-          <p>Qiara font. Clean branding. Black outro with fade-in. Full music. Our best yet.</p>
-          <div class="video-meta">
-            <span>V3</span>
-            <span>9.25/10</span>
-            <span>Mar 2026</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ VERSION HISTORY ════════════ -->
-<section class="section" id="versions" style="background: #080808;">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-divider"></div>
-      <h2>Version History</h2>
-      <p>From first test to near-production quality in 8 days.</p>
-    </div>
-    <div class="timeline">
-      <div class="tl-item current">
-        <div class="tl-date">March 22, 2026 — Current</div>
-        <h4>V3 — Clean & Professional</h4>
-        <p>Qiara Sans Serif font. Customer logo 25% transparent, no shadow. Pure black outro with business info fade-in. All Mecha branding removed from video content. Music library fully wired. Laura voiceover stable. Quality: 9.25/10.</p>
-      </div>
-      <div class="tl-item past">
-        <div class="tl-date">March 21, 2026</div>
-        <h4>V2 — Branded Bookends</h4>
-        <p>La Suegra v4 with Pillow-rendered intro/outro. Per-slide customer logo and watermark. Royalty-free music library (Latin, R&B, Rock, Country, Pop). Laura voiceover cutoff fixed (8s → 15s cap). Server v4 with browser video playback. Quality: 8.5/10.</p>
-      </div>
-      <div class="tl-item past">
-        <div class="tl-date">March 20, 2026</div>
-        <h4>V1 — First Pipeline</h4>
-        <p>End-to-end pipeline working: David → Junior → DJ Wonder → La Suegra. Form submission to finished video in ~100 seconds. Basic ffmpeg assembly. No branding, no logo overlay. ElevenLabs music generation (poor quality). Quality: 6/10.</p>
-      </div>
-      <div class="tl-item past">
-        <div class="tl-date">March 15, 2026</div>
-        <h4>V0 — Foundation</h4>
-        <p>Project structure on Mac Mini. David scriptwriter module built. Gemini API connected. First script generated for Arreola's Custom Cabinetry. The Machine is born.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ CRITICAL PATH ════════════ -->
-<section class="section" id="roadmap">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-divider"></div>
-      <h2>Critical Path</h2>
-      <p>From test videos to paying clients. Every week counts.</p>
-    </div>
-    <div class="timeline">
-      <div class="tl-item past">
-        <div class="tl-date">Week 1 — Mar 15-21 ✅</div>
-        <h4>Pipeline Foundation</h4>
-        <p>David, Junior, DJ Wonder, La Suegra all built and tested. End-to-end pipeline running. Form to finished video in ~100 seconds. 15+ test commercials produced.</p>
-      </div>
-      <div class="tl-item past">
-        <div class="tl-date">Week 2 — Mar 22 ✅</div>
-        <h4>Polish & Quality</h4>
-        <p>Qiara font. Branded intro/outro. Customer logo on every slide. Music library wired. Laura voiceover stable. Quality reached 9.25/10. Mecha HQ v7.0 launched with video gallery.</p>
-      </div>
-      <div class="tl-item current">
-        <div class="tl-date">Week 3 — Mar 23-28 ← We Are Here</div>
-        <h4>La Grecia — Publisher</h4>
-        <p>Build auto-publishing to Instagram Reels and Facebook Reels via Meta Graph API. Metiche provides SEO hashtags and bilingual captions. First automated post from pipeline to platform.</p>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">Week 4 — Mar 29 - Apr 4</div>
-        <h4>Real Client Testing</h4>
-        <p>Collect real business data from San Luis. Run pipeline with real photos and info. Test videos with actual business owners. Gather feedback. Iterate on quality.</p>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">Week 5 — Apr 5-11</div>
-        <h4>First Paying Clients</h4>
-        <p>Onboard 3-5 paying clients at Go Halfers rate ($49). Stripe billing. Client dashboard. Prove the model works with real revenue.</p>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">Week 6-8 — Apr 12-27</div>
-        <h4>Scale & Optimize</h4>
-        <p>Monitor analytics. Optimize video quality per category. Add more music tracks. Build Gopher for automated client intake. Target: 10+ active clients.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ PLATFORMS ════════════ -->
-<section class="section" id="platforms">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-divider"></div>
-      <h2>Ship Everywhere</h2>
-      <p>One video. Six platforms. Every screen in town.</p>
-    </div>
-    <div class="platforms-row">
-      <div class="platform-badge">TikTok</div>
-      <div class="platform-badge">Instagram Reels</div>
-      <div class="platform-badge">Facebook Reels</div>
-      <div class="platform-badge">Snapchat</div>
-      <div class="platform-badge">YouTube Shorts</div>
-      <div class="platform-badge">X.com</div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ PRICING ════════════ -->
-<section class="section" id="pricing" style="background: #080808;">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-divider"></div>
-      <h2>Pricing</h2>
-      <p>One client per category per market. Exclusivity is your moat.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <h3>Go Halfers</h3>
-        <div class="price-amount">$49</div>
-        <div class="price-period">first month</div>
-        <p>Half price to start. Full service. Auto-converts to $100/mo after month one.</p>
-      </div>
-      <div class="price-card featured">
-        <h3>Core Tier</h3>
-        <div class="price-amount">$100</div>
-        <div class="price-period">per month</div>
-        <p>Video commercials. Six platforms. One client per category. Your market, locked down.</p>
-      </div>
-      <div class="price-card">
-        <h3>Community</h3>
-        <div class="price-amount">$2</div>
-        <div class="price-period">per month</div>
-        <p>Nonprofits and churches. Because community comes first. Always.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ FOOTER ════════════ -->
-<footer class="footer">
-  <div class="container">
-    <div class="brand">MECHA</div>
-    <p>HQ v7.0 · SMVC Pipeline · Built by Claude + Manny · Mac Mini · San Luis Rio Colorado · 2026</p>
-    <p style="margin-top: 8px;">David · Junior · DJ Wonder · La Suegra · La Grecia · Metiche · Gopher · Monitor · Billing</p>
-  </div>
-</footer>
+<!-- LANGUAGE TOGGLE -->
+<div class="lang-toggle">
+<button class="lang-btn active" onclick="setLang('en')">EN</button>
+<button class="lang-btn" onclick="setLang('es')">ES</button>
+</div>
 
 <script>
-// Gallery filter
-function filterGallery(version) {
-  document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  document.querySelectorAll('.video-card').forEach(card => {
-    if (version === 'all' || card.dataset.version === version) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-// Scroll animations
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.step-card, .pipe-card, .video-card, .price-card, .tl-item').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = 'all 0.6s ease';
-  observer.observe(el);
-});
+const T={en:{'hero-badge':'AI-Powered Business Platform','hero-desc':'Everything your business needs to start, run, and grow — powered by artificial intelligence.','hero-cta':'CREATE YOUR COMMERCIAL','hero-explore':'EXPLORE','nav-cta':'Create','m1t':'Video Creator','m1d':'AI builds your 30-second commercial in minutes. Upload your photos, pick your music, and watch the magic happen. Professional quality. Zero experience needed.','m2t':'Logo Creator','m2d':"Don't have a logo? AI designs one for you. Pick your style, see it on your commercial, download it for print. Your brand starts here.",'m3t':'Business Card Maker','m3d':'Professional business cards designed by AI with your logo, your colors, your info. Order prints or share a digital version. First impressions matter.','m4t':'Social Manager','m4d':"Post to Facebook, Instagram, TikTok, and X — all from one place. Schedule content, optimize captions, and track what's working.",'m5t':'Cash Register','m5d':'Accept payments from your phone. Lowest fees because we own the network. Track sales, manage inventory, and grow — no bulky hardware.','m6t':'Business Insights','m6d':'See your numbers in graphs you actually understand. Sales, social engagement, video performance — all in one dashboard.','how-title':'How It Works','s1t':'Tell us about your business','s1d':'Name, photos, what you do. Takes 2 minutes.','s2t':'AI builds your commercial','s2d':'Script, visuals, voiceover, music — all generated in minutes.','s3t':'Watch and download','s3d':'Preview your video, download it, copy your caption.','s4t':'Post everywhere','s4d':'Share to Instagram, TikTok, Facebook — one tap.','st-title':'Built on the Border','st-p1':'Mecha was built in <span class="highlight">San Luis Río Colorado</span> by a builder who spent 25 years in public service watching small businesses struggle — no logo, no commercial, no online presence, no tools that spoke their language.','st-p2':'This platform is for the <span class="highlight">taquero</span>, the <span class="highlight">barber</span>, the <span class="highlight">mechanic</span>, the <span class="highlight">señora with the best tamales on the block</span>. People who never had a team of designers and marketers in their corner.','st-p3':'Now they do. <span class="highlight">Mecha is that team.</span>','memorial':'Dedicated to the memory of Martha Hernandez.<br>The woman who walked a mile with a bucket because she believed in doing whatever it takes.','cta-title':'Ready?','cta-desc':'Your first commercial is free. No login. No credit card. Just your business.','cta-btn':"LET'S GO",'f-priv':'Privacy','f-plat':'Platform','f-story':'Story','f-rights':'All rights reserved.'},es:{'hero-badge':'Plataforma de Negocios con IA','hero-desc':'Todo lo que tu negocio necesita para arrancar, operar y crecer — impulsado por inteligencia artificial.','hero-cta':'CREA TU COMERCIAL','hero-explore':'EXPLORAR','nav-cta':'Crear','m1t':'Creador de Video','m1d':'La IA construye tu comercial de 30 segundos en minutos. Sube tus fotos, elige tu música y mira la magia. Calidad profesional. Cero experiencia necesaria.','m2t':'Creador de Logo','m2d':'¿No tienes logo? La IA diseña uno para ti. Elige tu estilo, míralo en tu comercial, descárgalo para imprimir. Tu marca empieza aquí.','m3t':'Creador de Tarjetas','m3d':'Tarjetas de presentación profesionales diseñadas por IA con tu logo, tus colores, tu info. Ordena impresas o comparte digital.','m4t':'Redes Sociales','m4d':'Publica en Facebook, Instagram, TikTok y X — todo desde un lugar. Programa contenido, optimiza captions y mira qué funciona.','m5t':'Caja Registradora','m5d':'Acepta pagos desde tu celular. Las comisiones más bajas porque somos dueños de la red. Rastrea ventas y crece tu negocio.','m6t':'Analítica','m6d':'Mira tus números en gráficas que sí entiendes. Ventas, engagement, rendimiento de video — todo en un dashboard.','how-title':'Cómo Funciona','s1t':'Cuéntanos de tu negocio','s1d':'Nombre, fotos, qué haces. Toma 2 minutos.','s2t':'La IA crea tu comercial','s2d':'Guión, visuales, voz, música — todo generado en minutos.','s3t':'Mira y descarga','s3d':'Previsualiza tu video, descárgalo, copia tu caption.','s4t':'Publica en todos lados','s4d':'Comparte en Instagram, TikTok, Facebook — un toque.','st-title':'Hecho en la Frontera','st-p1':'Mecha fue construido en <span class="highlight">San Luis Río Colorado</span> por un constructor que pasó 25 años en servicio público viendo a pequeños negocios luchar — sin logo, sin comercial, sin presencia en línea, sin herramientas en su idioma.','st-p2':'Esta plataforma es para el <span class="highlight">taquero</span>, el <span class="highlight">barbero</span>, el <span class="highlight">mecánico</span>, la <span class="highlight">señora con los mejores tamales de la cuadra</span>. Gente que nunca tuvo un equipo de diseñadores y mercadólogos en su esquina.','st-p3':'Ahora lo tienen. <span class="highlight">Mecha es ese equipo.</span>','memorial':'Dedicado a la memoria de Martha Hernandez.<br>La mujer que caminó una milla con un balde porque creía en hacer lo que fuera necesario.','cta-title':'¿Listo?','cta-desc':'Tu primer comercial es gratis. Sin cuenta. Sin tarjeta. Solo tu negocio.','cta-btn':'ARRANCAMOS','f-priv':'Privacidad','f-plat':'Plataforma','f-story':'Historia','f-rights':'Todos los derechos reservados.'}};
+let currentLang='en';
+function setLang(l){currentLang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));document.querySelector('.lang-btn:nth-child('+(l==='en'?'1':'2')+')').classList.add('active');const t=T[l];Object.keys(t).forEach(id=>{const el=document.getElementById(id);if(el){if(el.tagName==='A'||el.tagName==='BUTTON')el.textContent=t[id];else el.innerHTML=t[id]}});document.documentElement.lang=l}
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)';x.target.style.transition='opacity 0.6s ease, transform 0.6s ease'}})},{threshold:0.1});
+document.querySelectorAll('.mod-card,.step').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';obs.observe(el)});
 </script>
-
 </body>
 </html>
